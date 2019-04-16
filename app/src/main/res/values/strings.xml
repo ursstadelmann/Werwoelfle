@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Werwölfle</string>
+    <string name="startseite_statusbar">Werwölfle - Let'se Go!</string>
+    <string name="startseite_willkommen">Willkommen im Finsterwald ! </string>
+    <string name="startseite_rollenErklären">Rollen erklären</string>
+    <string name="startseite_ablaufErklären">Ablauf erklären</string>
+</resources>
