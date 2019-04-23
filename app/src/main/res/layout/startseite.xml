@@ -101,5 +101,4 @@
             android:layout_height="wrap_content"
             android:text="@string/startseite_ablaufErklären" />
     </LinearLayout>
-
 </LinearLayout>
