@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textSize="30dp"
-        android:text="@string/startseite_statusbar" />
+        android:text="Wähle deine Dorfgemeinschaft" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,68 +21,54 @@
         android:orientation="vertical">
 
         <TextView
-        android:id="@+id/willkommen"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:text="@string/startseite_willkommen" />
-
-        <TextView
-            android:id="@+id/wieVielePersonen"
             android:layout_width="match_parent"
             android:layout_height="16dp"
-            android:text="Mit wie vielen Personen möchetet ihr spielen?" />
+            android:text="Trage hier die Namen aller Mitspieler ein:" />
+
+        <ScrollView
+            android:id="@+id/nameBoxes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/anzahlMitspieler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/zahlMitspieler"
-                />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="16dp"
                 android:layout_weight="1"
-                android:text="Personen und jemand, der das Spiel leitet (du)" />
+                android:text="Gruppe abspeichern:" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/nameNeueGruppe"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Gruppen-Name"
+                android:inputType="textMultiLine" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:text="Möchtest du mit der Rolle des BlinzliMeitschi spielen?" />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/yes_radio_button"
+            <Button
+                android:id="@+id/neueGruppeSpeichern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ja"
-                android:textAppearance="?android:textAppearanceMedium" />
-            <RadioButton
-                android:id="@+id/no_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nein"
-                android:textAppearance="?android:textAppearanceMedium" />
-        </RadioGroup>
+                android:text="speichern" />
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="startGame"
             android:text="Los" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
