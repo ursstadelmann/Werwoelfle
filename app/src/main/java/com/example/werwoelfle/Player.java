@@ -5,6 +5,7 @@ public class Player {
     private String name;
     private Roles role;
     private boolean alive = true;
+    private boolean inLove = false;
 
     public Player(int id, String name, Roles role) {
         this.id = id;
@@ -42,5 +43,13 @@ public class Player {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public boolean isInLove() {
+        return inLove;
+    }
+
+    public void setInLove(boolean inLove) {
+        this.inLove = inLove;
     }
 }

@@ -26,6 +26,20 @@ public class Game {
         return night;
     }
 
+    public void clearInLove() {
+        for (final Player player:players) {
+            player.setInLove(false);
+        }
+    }
+
+    public void setInLove(int playerId) {
+        for (final Player player:players) {
+            if (player.getId() == playerId) {
+                player.setInLove(true);
+            }
+        }
+    }
+
     private void randomizeRoles(ArrayList<Roles> roles) {
         Collections.shuffle(roles);
     }
