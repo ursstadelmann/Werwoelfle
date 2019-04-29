@@ -8,15 +8,42 @@ import java.util.Collections;
 public class Game {
     private static final String TAG = "Werewolf";
     final private ArrayList<Player> players = new ArrayList<>();
-    private Night night = new Night();
+    final private Night night = new Night();
     private int dayCycle = 0;
 
-    public Game(int players, ArrayList<String> names, ArrayList<Roles> roles) {
-        randomizeRoles(roles);
-        for (int i = 0; i < players; i++) {
-            this.players.add(new Player(i, names.get(i), roles.get(i)));
+    public Game() {
+        Log.d(TAG, "Game initialized");
+    }
+
+    public void initializePlayers(int players) {
+        if (this.players.size() > players) {
+            this.players.clear();
         }
-        Log.d(TAG, "Game initialized with " + players + " players");
+        for (int i = this.players.size(); i < players; i++) {
+            this.players.add(new Player(i));
+        }
+    }
+
+    public void setPlayerNames(ArrayList<String> names) {
+        if (names.size() < this.players.size()) {
+            throw new IllegalArgumentException("Insufficient names for players");
+        } else {
+            for (Player player:this.players) {
+                player.setName(names.get(player.getId()));
+            }
+        }
+    }
+
+    public void setPlayerRoles(ArrayList<Roles> roles) {
+        if (roles.size() < this.players.size()) {
+            throw new IllegalArgumentException("Insufficient roles for players");
+        } else {
+            randomizeRoles(roles);
+            for (Player player:this.players) {
+                player.setRole(roles.get(player.getId()));
+            }
+
+        }
     }
 
     public ArrayList<Player> getPlayers() {
