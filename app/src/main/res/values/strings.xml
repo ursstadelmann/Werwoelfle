@@ -19,4 +19,5 @@
         <item>17</item>
         <item>18</item>
     </string-array>
+    <string name="werGestorbenIst">2) Gestorben in dieser Nacht ist: %1$</string>
 </resources>
