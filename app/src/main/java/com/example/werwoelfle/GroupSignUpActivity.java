@@ -61,6 +61,12 @@ public class GroupSignUpActivity extends Activity {
 
     }
 
+    public void next(View v) {
+        Intent givePhoneToPlayerActivity = new Intent(this, GivePhoneToPlayerActivity.class);
+        givePhoneToPlayerActivity.putExtra("player", 0);
+        startActivity(givePhoneToPlayerActivity);
+    }
+
     private ArrayList<String> getNames() {
         ArrayList<String> names = new ArrayList<>();
 

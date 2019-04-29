@@ -8,11 +8,12 @@ import java.util.Collections;
 public class Game {
     private static final String TAG = "Werewolf";
     final private ArrayList<Player> players = new ArrayList<>();
-    final private Night night = new Night();
+    private Night night = new Night();
+    private int dayCycle = 0;
 
     public Game(int players, ArrayList<String> names, ArrayList<Roles> roles) {
         randomizeRoles(roles);
-        for (int i = 0; i <= players; i++) {
+        for (int i = 0; i < players; i++) {
             this.players.add(new Player(i, names.get(i), roles.get(i)));
         }
         Log.d(TAG, "Game initialized with " + players + " players");
@@ -38,6 +39,10 @@ public class Game {
                 player.setInLove(true);
             }
         }
+    }
+
+    public void endOfDay() {
+        this.dayCycle++;
     }
 
     private void randomizeRoles(ArrayList<Roles> roles) {

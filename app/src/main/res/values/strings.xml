@@ -20,4 +20,12 @@
         <item>18</item>
     </string-array>
     <string name="werGestorbenIst">2) Gestorben in dieser Nacht ist: %1$</string>
+    <string name="give_phone_to">Gib das Natel an %1$s weiter.</string>
+    <string name="give_phone_to_player">Spieler %1$s</string>
+    <string name="WEREWOLF">Werwolf</string>
+    <string name="VILLAGER">Dorfbewohner</string>
+    <string name="CUPID">Amor</string>
+    <string name="SEER">Seher</string>
+    <string name="WITCH">Hexe</string>
+    <string name="HUNTER">Jaeger</string>
 </resources>
