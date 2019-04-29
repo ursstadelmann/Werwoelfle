@@ -25,6 +25,11 @@
             android:layout_height="16dp"
             android:text="Trage hier die Namen aller Mitspieler ein:" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:text="(wenn möglich der Reihe nach)" />
+
         <ScrollView
             android:id="@+id/nameBoxes"
             android:layout_width="fill_parent"
