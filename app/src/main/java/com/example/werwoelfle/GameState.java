@@ -21,7 +21,6 @@ public class GameState extends Service {
     @Override
     public void onCreate() {
 
-
     }
 
     @Override
@@ -30,12 +29,12 @@ public class GameState extends Service {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onStart(Intent intent, int startId) {
         Log.d(TAG,"onStart(), Service started...");
         int players;
         ArrayList<String> names;
         ArrayList<Roles> roles;
-
 
         Bundle extras = intent.getExtras();
 
