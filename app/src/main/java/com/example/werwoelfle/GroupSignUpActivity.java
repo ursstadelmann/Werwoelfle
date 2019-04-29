@@ -1,8 +1,8 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -12,7 +12,7 @@ import android.widget.TableLayout;
 
 import java.util.ArrayList;
 
-public class GroupSignUpActivity extends Activity {
+public class GroupSignUpActivity extends AppCompatActivity {
 
     private int players;
 
@@ -50,15 +50,23 @@ public class GroupSignUpActivity extends Activity {
         scrollView.addView(layout);
     }
 
-    public void startGame(View v) {
-        // Create Service
-        /*Intent gameService = new Intent(this, GameState.class);
-        gameService.putExtra("players", this.players);
-        gameService.putExtra("names", getNames());
-        gameService.putExtra("roles", roles);
-        startService(gameService);*/
-        // Call RoleAllocation Activity
 
+    public void next(View v) {
+        // Call RoleSelection Activity
+
+    }
+
+    public boolean startService(int players, ArrayList<String> names, ArrayList<Roles> roles) {
+        if (names.size() == roles.size()) {
+            Intent gameService = new Intent(this, GameState.class);
+            gameService.putExtra("players", players);
+            gameService.putExtra("names", names);
+            gameService.putExtra("roles", roles);
+            startService(gameService);
+            return true;
+        }
+
+        return false;
     }
 
     private ArrayList<String> getNames() {
