@@ -2,8 +2,8 @@
     <string name="app_name">Werwölfle</string>
     <string name="startseite_statusbar">Letse Go!</string>
     <string name="startseite_willkommen">Willkommen im Finsterwald !</string>
-    <string name="startseite_rollenErklären">Rollen erklären</string>
-    <string name="startseite_ablaufErklären">Ablauf erklären</string>
+    <string name="startseite_rollenErklären">Figuren</string>
+    <string name="startseite_ablaufErklären">Ablauf</string>
     <string-array name="zahlMitspieler">
         <item>6</item>
         <item>7</item>
