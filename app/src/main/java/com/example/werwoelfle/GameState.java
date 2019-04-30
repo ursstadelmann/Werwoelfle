@@ -3,7 +3,6 @@ package com.example.werwoelfle;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -23,9 +22,10 @@ public class GameState extends Service {
         void setPlayers(int players);
         void setNames(ArrayList<String> names);
         void setRoles(ArrayList<Roles> roles);
+        ArrayList<Player> getPlayers();
     }
 
-    public class ServiceApi extends Binder implements IServiceApi   {
+    public class GameStateApi extends Binder implements IServiceApi   {
 
         @Override
         public void setPlayers(int players) {
@@ -40,6 +40,11 @@ public class GameState extends Service {
         @Override
         public void setRoles(ArrayList<Roles> roles) {
             GameState.this.getGame().setPlayerRoles(roles);
+        }
+
+        @Override
+        public ArrayList<Player> getPlayers() {
+            return GameState.this.getGame().getPlayers();
         }
     }
 

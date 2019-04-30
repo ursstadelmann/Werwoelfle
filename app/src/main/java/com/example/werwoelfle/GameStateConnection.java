@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 public class GameStateConnection implements ServiceConnection {
 
-    private GameState.IServiceApi api;
+    private GameState.IServiceApi api = null;
 
     public GameState.IServiceApi getApi() {
         return api;
@@ -20,5 +20,9 @@ public class GameStateConnection implements ServiceConnection {
     @Override
     public void onServiceDisconnected(ComponentName name) {
         api = null;
+    }
+
+    public boolean isServiceConnected() {
+        return (api != null);
     }
 }
