@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "Werewolf";
+    private static final String LOG_TAG = MainActivity.class.getName();
     private GameStateConnection conn = null;
 
     @Override

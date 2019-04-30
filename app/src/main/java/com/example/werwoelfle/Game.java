@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Game {
-    private static final String TAG = "Werewolf";
+    private static final String LOG_TAG = Game.class.getName();
     final private ArrayList<Player> players = new ArrayList<>();
     final private Night night = new Night();
     private int dayCycle = 0;
 
     public Game() {
-        Log.d(TAG, "Game initialized");
+        Log.d(LOG_TAG, "Game initialized");
     }
 
     public void initializePlayers(int players) {
@@ -30,6 +30,7 @@ public class Game {
         } else {
             for (Player player:this.players) {
                 player.setName(names.get(player.getId()));
+                this.players.set(player.getId(),player);
             }
         }
     }
@@ -41,8 +42,8 @@ public class Game {
             randomizeRoles(roles);
             for (Player player:this.players) {
                 player.setRole(roles.get(player.getId()));
+                this.players.set(player.getId(),player);
             }
-
         }
     }
 

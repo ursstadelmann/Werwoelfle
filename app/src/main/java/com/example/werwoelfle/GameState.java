@@ -10,13 +10,13 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class GameState extends Service {
-    private static final String TAG = "Werewolf";
+    private static final String LOG_TAG = GameState.class.getName();
     private Game game;
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG,"onBind(), Service binded...");
-        return new ServiceApi();
+        Log.d(LOG_TAG,"onBind(), Service binded...");
+        return new GameStateApi();
     }
 
     public interface IServiceApi {
@@ -45,21 +45,21 @@ public class GameState extends Service {
 
     @Override
     public void onCreate() {
-        Log.d(TAG,"onCreate(), Service started...");
+        Log.d(LOG_TAG,"onCreate(), Service started...");
         super.onCreate();
         this.game = new Game();
     }
 
     @Override
     public void onDestroy() {
-        Log.d(TAG,"onDestroy(), Service stopped...");
+        Log.d(LOG_TAG,"onDestroy(), Service stopped...");
         super.onDestroy();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void onStart(Intent intent, int startId) {
-        Log.d(TAG,"onStart(), Service started...");
+        Log.d(LOG_TAG,"onStart(), Service started...");
     }
 
     @Override
