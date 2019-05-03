@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
@@ -52,5 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private void initPlayers() {
         Spinner playerDropdown = (Spinner) findViewById(R.id.playerCount);
         conn.getApi().setPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()));
+        ArrayList<Integer> inLoveIds = new ArrayList<>();
+        inLoveIds.add(0);
+        inLoveIds.add(1);
+        conn.getApi().setInLove(inLoveIds);
     }
 }

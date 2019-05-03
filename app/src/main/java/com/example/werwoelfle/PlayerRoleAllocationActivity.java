@@ -66,6 +66,8 @@ public class PlayerRoleAllocationActivity extends Activity {
             givePhoneToPlayerActivity.putExtra("player", this.player.getId() + 1);
             startActivity(givePhoneToPlayerActivity);
         } else {
+            // Game start
+            conn.getApi().newNight();
             Intent nightGoingToSleep = new Intent(this, NightGoingToSleepActivity.class);
             startActivity(nightGoingToSleep);
         }

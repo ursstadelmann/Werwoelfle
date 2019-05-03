@@ -22,7 +22,11 @@ public class GameState extends Service {
         void setPlayers(int players);
         void setNames(ArrayList<String> names);
         void setRoles(ArrayList<Roles> roles);
+        void setInLove(ArrayList<Integer> inLoveIds);
+        void newNight();
+
         ArrayList<Player> getPlayers();
+        ArrayList<Player> getInLove();
     }
 
     public class GameStateApi extends Binder implements IServiceApi   {
@@ -30,6 +34,11 @@ public class GameState extends Service {
         @Override
         public void setPlayers(int players) {
             GameState.this.getGame().initializePlayers(players);
+        }
+
+        @Override
+        public ArrayList<Player> getPlayers() {
+            return GameState.this.getGame().getPlayers();
         }
 
         @Override
@@ -43,8 +52,18 @@ public class GameState extends Service {
         }
 
         @Override
-        public ArrayList<Player> getPlayers() {
-            return GameState.this.getGame().getPlayers();
+        public void setInLove(ArrayList<Integer> inLoveIds){
+            GameState.this.getGame().setInLove(inLoveIds);
+        }
+
+        @Override
+        public void newNight() {
+            GameState.this.getGame().newNight();
+        }
+
+        @Override
+        public ArrayList<Player> getInLove() {
+            return GameState.this.getGame().getInLove();
         }
     }
 
