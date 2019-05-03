@@ -52,6 +52,16 @@ public class Game {
         return players;
     }
 
+    public ArrayList<Player> getPlayersAlive() {
+        ArrayList<Player> playersAlive = new ArrayList<>();
+        for (Player player: players) {
+            if (player.isAlive()) {
+                playersAlive.add(player);
+            }
+        }
+        return playersAlive;
+    }
+
     public ArrayList<Integer> getLoveIds() {
         ArrayList<Integer> loveIds = new ArrayList<>();
         for (Player player:getPlayers()) {
@@ -68,6 +78,10 @@ public class Game {
 
     private ArrayList<Night> getNights() {
         return nights;
+    }
+
+    public int getDayCycle() {
+        return dayCycle;
     }
 
     public void newNight() {
