@@ -7,33 +7,62 @@ import android.view.View;
 import android.widget.TextView;
 
 public class GivePhoneToPlayerActivity extends Activity {
-    int player;
+    private GameStateConnection conn = new GameStateConnection();
+    private static final String LOG_TAG = RoleSelectionActivity.class.getName();
+
+    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give_phone_to_player);
 
+
+        bindService(new Intent("service"), conn, 0);
+
+        //TODO: Wait until service is bound
         Bundle extras = getIntent().getExtras();
-        this.player = extras.getInt("player");
-        setText(this.player);
+
+
+        // Get Name from Service
+        this.player =  conn.getApi().getPlayers().get(extras.getInt("player"));
+        setText(player.getName());
     }
 
-    private void setText(int player) {
-        // Get Name from Service
-        //if name.isEmpty()
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!conn.isServiceConnected()) {
+            bindService(new Intent("service"), conn, 0);
+        }
+    }
 
-        String PLAYER_TEXT = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(conn);
+    }
+
+    private void setText(String playerName) {
+        String playerText;
+        if (GivePhoneToPlayerActivity.isNullOrEmpty(playerName)) {
+            playerText = getApplicationContext().getString(R.string.give_phone_to_player, playerName);
+        } else {
+            playerText = playerName;
+        }
 
         TextView textView = findViewById(R.id.give_phone_to_player);
-        textView.setText(getApplicationContext().getString(R.string.give_phone_to, PLAYER_TEXT));
-
-        //if name not empty set name
+        textView.setText(getApplicationContext().getString(R.string.give_phone_to, playerText));
     }
 
     public void next(View v) {
         Intent roleAllocation = new Intent(this, PlayerRoleAllocationActivity.class);
-        roleAllocation.putExtra("player", this.player);
+        roleAllocation.putExtra("player", this.player.getId());
         startActivity(roleAllocation);
+    }
+
+    @org.jetbrains.annotations.Contract("null -> false")
+    public static boolean isNullOrEmpty(String str) {
+        return str != null && !str.trim().isEmpty();
     }
 }

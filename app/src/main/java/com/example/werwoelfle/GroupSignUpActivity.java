@@ -1,8 +1,8 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -12,21 +12,34 @@ import android.widget.TableLayout;
 
 import java.util.ArrayList;
 
-public class GroupSignUpActivity extends Activity {
+public class GroupSignUpActivity extends AppCompatActivity {
 
-    private int players;
-
-    private static int LINEAR_LAYOUT_ID = 1000;
+    private static final String LOG_TAG = GroupSignUpActivity.class.getName();
+    private GameStateConnection conn = new GameStateConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_group_signup);
 
-        Bundle extras = getIntent().getExtras();
-        this.players = extras.getInt("players");
+        bindService(new Intent("service"), conn, 0);
 
-        createNameBoxes(this.players);
+        //TODO: Wait until service is bound
+        createNameBoxes(conn.getApi().getPlayers().size());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!conn.isServiceConnected()) {
+            bindService(new Intent("service"), conn, 0);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(conn);
     }
 
     private void createNameBoxes(int players) {
@@ -35,7 +48,6 @@ public class GroupSignUpActivity extends Activity {
 
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        layout.setId(LINEAR_LAYOUT_ID);
 
         for(int player = 1; player <= players; player++) {
             // Create Textbox
@@ -50,27 +62,20 @@ public class GroupSignUpActivity extends Activity {
         scrollView.addView(layout);
     }
 
-    public void startGame(View v) {
-        // Create Service
-        /*Intent gameService = new Intent(this, GameState.class);
-        gameService.putExtra("players", this.players);
-        gameService.putExtra("names", getNames());
-        gameService.putExtra("roles", roles);
-        startService(gameService);*/
-        // Call RoleAllocation Activity
-
-    }
 
     public void next(View v) {
-        Intent givePhoneToPlayerActivity = new Intent(this, GivePhoneToPlayerActivity.class);
-        givePhoneToPlayerActivity.putExtra("player", 0);
-        startActivity(givePhoneToPlayerActivity);
+        // Call RoleSelection Activity
+        conn.getApi().setNames(getNames());
+        Intent roleSelectionActivity = new Intent(this, RoleSelectionActivity.class);
+        startActivity(roleSelectionActivity);
     }
 
     private ArrayList<String> getNames() {
         ArrayList<String> names = new ArrayList<>();
 
-        LinearLayout linearLayout = findViewById(LINEAR_LAYOUT_ID);
+        ScrollView scrollView = findViewById(R.id.nameBoxes);
+        LinearLayout linearLayout = (LinearLayout) scrollView.getChildAt(1);
+
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             if (linearLayout.getChildAt(i) instanceof EditText) {
                 EditText et = (EditText)linearLayout.getChildAt(i);

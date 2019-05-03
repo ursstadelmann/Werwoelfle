@@ -7,42 +7,67 @@ import android.view.View;
 import android.widget.TextView;
 
 public class PlayerRoleAllocationActivity extends Activity {
-   int player;
+    private GameStateConnection conn = new GameStateConnection();
+    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+
+    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.player_role);
+        setContentView(R.layout.activity_player_role);
 
         Bundle extras = getIntent().getExtras();
-        this.player = extras.getInt("player");
-        setText(this.player);
+
+        bindService(new Intent("service"), conn, 0);
+        // Get Player from Service
+        this.player = conn.getApi().getPlayers().get(extras.getInt("player"));
+        setPlayerName(player.getName());
+        setPlayerRole(player.getRole());
     }
 
-    private void setText(int player) {
-        // Get Name from Service
-        //if name.isEmpty()
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!conn.isServiceConnected()) {
+            bindService(new Intent("service"), conn, 0);
+        }
+    }
 
-        String PLAYER_TEXT = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(conn);
+    }
+
+    private void setPlayerName(String playerName) {
+        // Get Name from Service
+        String playerText;
+        if (GivePhoneToPlayerActivity.isNullOrEmpty(playerName)) {
+            playerText = getApplicationContext().getString(R.string.give_phone_to_player, playerName);
+        } else {
+            playerText = playerName;
+        }
 
         TextView textView = findViewById(R.id.give_phone_to_player);
-        textView.setText(getApplicationContext().getString(R.string.give_phone_to, PLAYER_TEXT));
+        textView.setText(playerText);
+    }
 
-        //if name not empty set name
-
+    private void setPlayerRole(Roles role) {
         //getRole from service
-        String playerRole = Roles.WEREWOLF.getLabel(getApplicationContext());
+        String playerRole = role.getLabel(getApplicationContext());
         TextView playerRoleTV = findViewById(R.id.player_role);
         playerRoleTV.setText(playerRole);
     }
 
     public void next(View v) {
-        //if this.player < Service.getPlayers() {
-        Intent givePhoneToPlayerActivity = new Intent(this, GivePhoneToPlayerActivity.class);
-        givePhoneToPlayerActivity.putExtra("player", this.player++);
-        startActivity(givePhoneToPlayerActivity);
-        /*} else {
-        going to sleep activity
-        */
+        if (this.player.getId() < conn.getApi().getPlayers().size()) {
+            Intent givePhoneToPlayerActivity = new Intent(this, GivePhoneToPlayerActivity.class);
+            givePhoneToPlayerActivity.putExtra("player", this.player.getId() + 1);
+            startActivity(givePhoneToPlayerActivity);
+        } else {
+            Intent nightGoingToSleep = new Intent(this, NightGoingToSleepActivity.class);
+            startActivity(nightGoingToSleep);
+        }
     }
 }

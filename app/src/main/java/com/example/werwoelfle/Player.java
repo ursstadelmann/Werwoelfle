@@ -13,6 +13,10 @@ public class Player {
         this.role = role;
     }
 
+    public Player(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
