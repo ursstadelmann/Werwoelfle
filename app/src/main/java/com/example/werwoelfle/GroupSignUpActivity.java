@@ -3,6 +3,7 @@ package com.example.werwoelfle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class GroupSignUpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = GroupSignUpActivity.class.getName();
     private GameStateConnection conn = new GameStateConnection();
+    private GroupMemoDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,19 @@ public class GroupSignUpActivity extends AppCompatActivity {
         if (conn.isServiceConnected()) {
             createNameBoxes(conn.getApi().getPlayers().size());
         }
+        createNameBoxes(6);
+
+
+        GroupMemo testMemo = new GroupMemo("Testgruppe", 8, "Paul", false);
+        Log.d(LOG_TAG, "Inhalt der Testdemo: " + testMemo.toString());
+
+        dataSource = new GroupMemoDataSource(this);
+
+        Log.d(LOG_TAG, " Die Datenquelle wird geöffnet");
+        dataSource.open();
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen");
+        dataSource.close();
     }
 
     @Override
