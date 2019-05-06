@@ -18,7 +18,7 @@ public class GivePhoneToPlayerActivity extends Activity {
         setContentView(R.layout.activity_give_phone_to_player);
 
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
 
         //TODO: Wait until service is bound
         Bundle extras = getIntent().getExtras();
@@ -33,7 +33,7 @@ public class GivePhoneToPlayerActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -43,16 +43,16 @@ public class GivePhoneToPlayerActivity extends Activity {
         unbindService(conn);
     }
 
-    private void setText(String playerName) {
-        String playerText;
-        if (GivePhoneToPlayerActivity.isNullOrEmpty(playerName)) {
-            playerText = getApplicationContext().getString(R.string.give_phone_to_player, playerName);
-        } else {
-            playerText = playerName;
-        }
+        private void setText(String playerName) {
+            String playerText;
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(playerName)) {
+                playerText = getApplicationContext().getString(R.string.give_phone_to_player, playerName);
+            } else {
+                playerText = playerName;
+            }
 
-        TextView textView = findViewById(R.id.give_phone_to_player);
-        textView.setText(getApplicationContext().getString(R.string.give_phone_to, playerText));
+            TextView textView = findViewById(R.id.give_phone_to_player);
+            textView.setText(getApplicationContext().getString(R.string.give_phone_to, playerText));
     }
 
     public void next(View v) {

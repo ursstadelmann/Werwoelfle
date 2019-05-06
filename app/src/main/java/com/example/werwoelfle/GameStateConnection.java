@@ -6,15 +6,15 @@ import android.os.IBinder;
 
 public class GameStateConnection implements ServiceConnection {
 
-    private GameState.IServiceApi api = null;
+    private GameState.GameStateApiInterface api = null;
 
-    public GameState.IServiceApi getApi() {
+    public GameState.GameStateApiInterface getApi() {
         return api;
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        this.api = (GameState.IServiceApi) service;
+        this.api = (GameState.GameStateApiInterface) service;
     }
 
     @Override

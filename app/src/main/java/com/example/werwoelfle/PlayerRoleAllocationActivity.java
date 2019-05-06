@@ -19,7 +19,7 @@ public class PlayerRoleAllocationActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
         // Get Player from Service
         this.player = conn.getApi().getPlayers().get(extras.getInt("player"));
         setPlayerName(player.getName());
@@ -30,7 +30,7 @@ public class PlayerRoleAllocationActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -66,6 +66,8 @@ public class PlayerRoleAllocationActivity extends Activity {
             givePhoneToPlayerActivity.putExtra("player", this.player.getId() + 1);
             startActivity(givePhoneToPlayerActivity);
         } else {
+            // Game start
+            conn.getApi().newNight();
             Intent nightGoingToSleep = new Intent(this, NightGoingToSleepActivity.class);
             startActivity(nightGoingToSleep);
         }

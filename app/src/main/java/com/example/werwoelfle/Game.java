@@ -2,13 +2,14 @@ package com.example.werwoelfle;
 
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Game {
     private static final String LOG_TAG = Game.class.getName();
     final private ArrayList<Player> players = new ArrayList<>();
-    final private Night night = new Night();
+    final private ArrayList<Night> nights = new ArrayList<>();
     private int dayCycle = 0;
 
     public Game() {
@@ -51,8 +52,74 @@ public class Game {
         return players;
     }
 
-    public Night getNight() {
-        return night;
+    public ArrayList<Player> getPlayersAlive() {
+        ArrayList<Player> playersAlive = new ArrayList<>();
+        for (Player player: players) {
+            if (player.isAlive()) {
+                playersAlive.add(player);
+            }
+        }
+        return playersAlive;
+    }
+
+    public ArrayList<Player> getPlayersDiedThisNight() {
+        ArrayList<Player> playersDied = new ArrayList<>();
+        Night night = getNight(getDayCycle());
+        boolean inLove = false;
+        for (Player player:getPlayers()) {
+            if (!night.isHealedByWitch() && player.getId() == night.getKilledByWerewolf() || player.getId() == night.getKilledByWitch()) {
+                if (player.isInLove()) {
+                    inLove = true;
+                } else {
+                    playersDied.add(player);
+                }
+            }
+        }
+
+        if (inLove) {
+            ArrayList<Integer> loveIds = getLoveIds();
+            for (int id:loveIds) {
+                playersDied.add(getPlayers().get(id));
+            }
+        }
+
+        return playersDied;
+    }
+
+    public ArrayList<Integer> getLoveIds() {
+        ArrayList<Integer> loveIds = new ArrayList<>();
+        for (Player player:getPlayers()) {
+            if (player.isInLove()) {
+                loveIds.add(player.getId());
+            }
+        }
+        return loveIds;
+    }
+
+    public Night getNight(int night) {
+        return this.getNights().get(night);
+    }
+
+    private ArrayList<Night> getNights() {
+        return nights;
+    }
+
+    public int getDayCycle() {
+        return dayCycle;
+    }
+
+    public void newNight() {
+        endOfDay();
+        //If Night got already created
+        for (Night night : nights) {
+            if (night.getNightId().equals(this.dayCycle)) {
+                return;
+            }
+        }
+
+        Night night = new Night();
+        night.setNightId(this.dayCycle);
+        nights.add(night);
     }
 
     public void clearInLove() {
@@ -61,12 +128,27 @@ public class Game {
         }
     }
 
-    public void setInLove(int playerId) {
-        for (final Player player:players) {
-            if (player.getId() == playerId) {
+    public void setInLove(ArrayList<Integer> playerIds) {
+        if (this.getInLove().size() + playerIds.size() > 2) {
+            this.clearInLove();
+        }
+        if (playerIds.size() <= 2) {
+            for (int playerId : playerIds) {
+                Player player = this.getPlayers().get(playerId);
                 player.setInLove(true);
+                this.getPlayers().set(playerId, player);
             }
         }
+    }
+
+    public ArrayList<Player> getInLove() {
+        ArrayList<Player> inLove = new ArrayList<>();
+        for (final Player player:players) {
+            if (player.isInLove()) {
+                inLove.add(player);
+            }
+        }
+        return inLove;
     }
 
     public void endOfDay() {
@@ -75,5 +157,10 @@ public class Game {
 
     private void randomizeRoles(ArrayList<Roles> roles) {
         Collections.shuffle(roles);
+    }
+
+    public void killPlayer(Player killPlayer) {
+        killPlayer.setAlive(false);
+        this.getPlayers().set(killPlayer.getId(), killPlayer);
     }
 }

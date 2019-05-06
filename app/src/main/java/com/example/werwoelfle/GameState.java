@@ -18,18 +18,43 @@ public class GameState extends Service {
         return new GameStateApi();
     }
 
-    public interface IServiceApi {
+    public interface GameStateApiInterface {
         void setPlayers(int players);
         void setNames(ArrayList<String> names);
         void setRoles(ArrayList<Roles> roles);
+        void setInLove(ArrayList<Integer> inLoveIds);
+        void newNight();
+
+        void killPlayer(Player killPlayer);
         ArrayList<Player> getPlayers();
+        ArrayList<Player> getPlayersAlive();
+        ArrayList<Player> getInLove();
+        int getKilledByWerewolf();
+        int getKilledByWitch();
+        boolean isHealedByWitch();
+        int getSeerWatched();
+        ArrayList<Player> getPlayersDiedThisNight();
+        void setKilledByWerewolf(int killedByWerewolf);
+        void setHealedByWitch(boolean isHealed);
+        void setKilledByWitch(int killedByWitch);
+        void setSeerWatched(int seerWatched);
     }
 
-    public class GameStateApi extends Binder implements IServiceApi   {
+    public class GameStateApi extends Binder implements GameStateApiInterface {
 
         @Override
         public void setPlayers(int players) {
             GameState.this.getGame().initializePlayers(players);
+        }
+
+        @Override
+        public ArrayList<Player> getPlayers() {
+            return GameState.this.getGame().getPlayers();
+        }
+
+        @Override
+        public ArrayList<Player> getPlayersAlive() {
+            return GameState.this.getGame().getPlayersAlive();
         }
 
         @Override
@@ -43,8 +68,68 @@ public class GameState extends Service {
         }
 
         @Override
-        public ArrayList<Player> getPlayers() {
-            return GameState.this.getGame().getPlayers();
+        public void setInLove(ArrayList<Integer> inLoveIds){
+            GameState.this.getGame().setInLove(inLoveIds);
+        }
+
+        @Override
+        public void newNight() {
+            GameState.this.getGame().newNight();
+        }
+
+        @Override
+        public void killPlayer(Player killPlayer) {
+            GameState.this.getGame().killPlayer(killPlayer);
+        }
+
+        @Override
+        public ArrayList<Player> getInLove() {
+            return GameState.this.getGame().getInLove();
+        }
+
+        @Override
+        public int getKilledByWerewolf() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWerewolf();
+        }
+
+        @Override
+        public int getKilledByWitch() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWitch();
+        }
+
+        @Override
+        public boolean isHealedByWitch() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).isHealedByWitch();
+        }
+
+        @Override
+        public int getSeerWatched() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getSeerWatched();
+        }
+
+        @Override
+        public ArrayList<Player> getPlayersDiedThisNight() {
+            return GameState.this.getGame().getPlayersDiedThisNight();
+        }
+
+        @Override
+        public void setKilledByWerewolf(int killedByWerewolf) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWerewolf(killedByWerewolf);
+        }
+
+        @Override
+        public void setHealedByWitch(boolean isHealed) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setHealedByWitch(isHealed);
+        }
+
+        @Override
+        public void setKilledByWitch(int killedByWitch) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWitch(killedByWitch);
+        }
+
+        @Override
+        public void setSeerWatched(int seerWatched) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setSeerWatched(seerWatched);
         }
     }
 

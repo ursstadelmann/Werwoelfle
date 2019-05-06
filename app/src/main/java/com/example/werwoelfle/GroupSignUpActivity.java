@@ -22,17 +22,19 @@ public class GroupSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_group_signup);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
 
         //TODO: Wait until service is bound
-        createNameBoxes(conn.getApi().getPlayers().size());
+        if (conn.isServiceConnected()) {
+            createNameBoxes(conn.getApi().getPlayers().size());
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -49,7 +51,7 @@ public class GroupSignUpActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        for(int player = 1; player <= players; player++) {
+        for (int player = 1; player <= players; player++) {
             // Create Textbox
             EditText textBox = new EditText(this);
             textBox.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
@@ -78,7 +80,7 @@ public class GroupSignUpActivity extends AppCompatActivity {
 
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             if (linearLayout.getChildAt(i) instanceof EditText) {
-                EditText et = (EditText)linearLayout.getChildAt(i);
+                EditText et = (EditText) linearLayout.getChildAt(i);
                 names.add(et.getText().toString());
             }
         }
