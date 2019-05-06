@@ -22,7 +22,7 @@ public class NightWitchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_witch);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
         this.players = conn.getApi().getPlayersAlive();
 
         setKilledPlayerText(conn.getApi().getKilledByWerewolf());
@@ -37,7 +37,7 @@ public class NightWitchActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 

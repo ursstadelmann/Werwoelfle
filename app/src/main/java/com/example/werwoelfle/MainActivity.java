@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
-    private GameStateConnection conn = null;
+    private GameStateConnection conn = new GameStateConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         // Start Game Service
         Intent gameService = new Intent(this, GameState.class);
         startService(gameService);
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
@@ -29,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "MainActivity: onResume()");
         super.onResume();
 
-        bindService(new Intent("service"), conn, 0);
+        if (!conn.isServiceConnected()) {
+            bindService(new Intent(this, MainActivity.class), conn, 0);
+        }
     }
 
     @Override

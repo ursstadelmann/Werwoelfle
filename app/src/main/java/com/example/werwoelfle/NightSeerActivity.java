@@ -20,7 +20,7 @@ public class NightSeerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_seer);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
         this.players = conn.getApi().getPlayersAlive();
 
         int preselected = conn.getApi().getSeerWatched();
@@ -32,7 +32,7 @@ public class NightSeerActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -88,7 +88,15 @@ public class NightSeerActivity extends Activity {
 
     public void next(View v) {
         conn.getApi().setSeerWatched(getSeerWatched());
+        killPlayers(conn.getApi().getPlayersDiedThisNight());
+
         Intent dayPeopleWakingUp = new Intent(this, DayPeopleWakingUpActivity.class);
         startActivity(dayPeopleWakingUp);
+    }
+
+    private void killPlayers(ArrayList<Player> playersDied) {
+        for (Player playerDead:playersDied) {
+            conn.getApi().killPlayer(playerDead);
+        }
     }
 }

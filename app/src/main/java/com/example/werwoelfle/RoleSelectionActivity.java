@@ -17,7 +17,7 @@ public class RoleSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_selection);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
         //TODO: Wait until service is bound
         initiateRoles(conn.getApi().getPlayers().size());
     }
@@ -26,7 +26,7 @@ public class RoleSelectionActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -51,6 +51,12 @@ public class RoleSelectionActivity extends AppCompatActivity {
 
     private ArrayList<Roles> getRoles() {
         ArrayList<Roles> roles = new ArrayList<>();
+        roles.add(Roles.WEREWOLF);
+        roles.add(Roles.WEREWOLF);
+        roles.add(Roles.WITCH);
+        roles.add(Roles.CUPID);
+        roles.add(Roles.SEER);
+        roles.add(Roles.VILLAGER);
 
         return roles;
     }

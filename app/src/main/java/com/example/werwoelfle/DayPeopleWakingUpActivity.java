@@ -20,7 +20,7 @@ public class DayPeopleWakingUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day_people_waking_up);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
 
         this.players = conn.getApi().getPlayersAlive();
 
@@ -35,7 +35,7 @@ public class DayPeopleWakingUpActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -88,21 +88,23 @@ public class DayPeopleWakingUpActivity extends Activity {
         spinner.setSelection(selectionId);
     }
 
-    private Integer getSpinnerSelected() {
-        Integer id = null;
+    private Player getSpinnerSelected() {
+        Player playerKilled = null;
         Spinner killedByWerewolf = findViewById(R.id.hunter_kills);
         String killedByWerewolfName = killedByWerewolf.getSelectedItem().toString();
 
         for (Player player:this.players) {
             if (player.getName().equals(killedByWerewolfName)) {
-                id = player.getId();
+                playerKilled = player;
             }
         }
-        return id;
+        return playerKilled;
     }
 
     public void next(View v) {
-        int hunterKilled = getSpinnerSelected();
-        Intent dayAccusingEachOther = new Intent(this, DayAccuingEachOtherActivity.class);
+        Player hunterKilled = getSpinnerSelected();
+        conn.getApi().killPlayer(hunterKilled);
+
+        Intent dayAccusingEachOther = new Intent(this, DayAccusingEachOtherActivity.class);
     }
 }

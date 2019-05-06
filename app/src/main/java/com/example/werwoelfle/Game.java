@@ -158,4 +158,9 @@ public class Game {
     private void randomizeRoles(ArrayList<Roles> roles) {
         Collections.shuffle(roles);
     }
+
+    public void killPlayer(Player killPlayer) {
+        killPlayer.setAlive(false);
+        this.getPlayers().set(killPlayer.getId(), killPlayer);
+    }
 }

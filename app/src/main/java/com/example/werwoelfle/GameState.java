@@ -18,13 +18,14 @@ public class GameState extends Service {
         return new GameStateApi();
     }
 
-    public interface IServiceApi {
+    public interface GameStateApiInterface {
         void setPlayers(int players);
         void setNames(ArrayList<String> names);
         void setRoles(ArrayList<Roles> roles);
         void setInLove(ArrayList<Integer> inLoveIds);
         void newNight();
 
+        void killPlayer(Player killPlayer);
         ArrayList<Player> getPlayers();
         ArrayList<Player> getPlayersAlive();
         ArrayList<Player> getInLove();
@@ -39,7 +40,7 @@ public class GameState extends Service {
         void setSeerWatched(int seerWatched);
     }
 
-    public class GameStateApi extends Binder implements IServiceApi   {
+    public class GameStateApi extends Binder implements GameStateApiInterface {
 
         @Override
         public void setPlayers(int players) {
@@ -74,6 +75,11 @@ public class GameState extends Service {
         @Override
         public void newNight() {
             GameState.this.getGame().newNight();
+        }
+
+        @Override
+        public void killPlayer(Player killPlayer) {
+            GameState.this.getGame().killPlayer(killPlayer);
         }
 
         @Override

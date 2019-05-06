@@ -20,7 +20,7 @@ public class NightWerewolfActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_werewolf);
 
-        bindService(new Intent("service"), conn, 0);
+        bindService(new Intent(this, GameState.class), conn, 0);
         this.players = conn.getApi().getPlayersAlive();
 
         int preselected = conn.getApi().getKilledByWerewolf();
@@ -32,7 +32,7 @@ public class NightWerewolfActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (!conn.isServiceConnected()) {
-            bindService(new Intent("service"), conn, 0);
+            bindService(new Intent(this, GameState.class), conn, 0);
         }
     }
 
@@ -72,6 +72,8 @@ public class NightWerewolfActivity extends Activity {
     }
 
     public void next(View v) {
-
+        conn.getApi().setKilledByWerewolf(getSpinnerSelected());
+        Intent nightWitchActivity = new Intent(this, NightWitchActivity.class);
+        startActivity(nightWitchActivity);
     }
 }
