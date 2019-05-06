@@ -15,7 +15,7 @@ public class NightGoingToSleepActivity extends Activity {
     }
 
     public void next(View v) {
-        Intent nightCupid = new Intent(this, NightCupid.class);
+        Intent nightCupid = new Intent(this, NightCupidActivity.class);
         startActivity(nightCupid);
     }
 }

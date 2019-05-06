@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class NightCupid extends Activity {
+public class NightSeerActivity extends Activity {
     private GameStateConnection conn = new GameStateConnection();
     private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
 
@@ -18,15 +18,14 @@ public class NightCupid extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.night_cupid);
+        setContentView(R.layout.night_seer);
 
         bindService(new Intent("service"), conn, 0);
         this.players = conn.getApi().getPlayersAlive();
 
-        ArrayList<Player> inLovePlayer = conn.getApi().getInLove();
+        int preselected = conn.getApi().getSeerWatched();
 
-        setPlayerDropdown(this.players, R.id.inLove_1, inLovePlayer.get(0).getId());
-        setPlayerDropdown(this.players, R.id.inLove_2, inLovePlayer.get(1).getId());
+        setPlayerDropdown(this.players, R.id.seerDropdown, preselected);
     }
 
     @Override
@@ -44,14 +43,14 @@ public class NightCupid extends Activity {
     }
 
     private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {
-        final Spinner spinner = (Spinner) findViewById(spinnerId);
+        final Spinner spinner = findViewById(spinnerId);
 
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
             playerNames.add(player.getName());
         }
 
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
             this, android.R.layout.simple_spinner_item, playerNames);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -59,27 +58,37 @@ public class NightCupid extends Activity {
         spinner.setSelection(selectionId);
     }
 
-    public void next(View v) {
-        // Get Player ID
-        ArrayList<Integer> inLoveIds = getSpinnerSelected();
+    private Integer getSeerWatched() {
+        Integer id = null;
+        Spinner killedByWerewolf = findViewById(R.id.seerDropdown);
+        String killedByWerewolfName = killedByWerewolf.getSelectedItem().toString();
 
-        conn.getApi().setInLove(inLoveIds);
-        Intent nightCupid = new Intent(this, NightWerewolf.class);
-        startActivity(nightCupid);
-    }
-
-    private ArrayList<Integer> getSpinnerSelected() {
-        ArrayList<Integer> inLoveIds = new ArrayList<>();
-        Spinner inLove_1 = findViewById(R.id.inLove_1);
-        String inLove1 = inLove_1.getSelectedItem().toString();
-
-        Spinner inLove_2 = findViewById(R.id.inLove_2);
-        String inLove2 = inLove_2.getSelectedItem().toString();
         for (Player player:this.players) {
-            if (player.getName().equals(inLove1) || player.getName().equals(inLove2)) {
-                inLoveIds.add(player.getId());
+            if (player.getName().equals(killedByWerewolfName)) {
+                id = player.getId();
             }
         }
-        return inLoveIds;
+        return id;
+    }
+
+    public void getRole(View v) {
+        int playerId = getSeerWatched();
+        for (Player player:this.players) {
+            if (player.getId() == playerId) {
+                if (player.getRole() == Roles.WEREWOLF) {
+                    Intent showWerewolf = new Intent(this, NightSeerIsAWerewolf.class);
+                    startActivity(showWerewolf);
+                } else {
+                    Intent showWerewolf = new Intent(this, NightSeerIsAVillager.class);
+                    startActivity(showWerewolf);
+                }
+            }
+        }
+    }
+
+    public void next(View v) {
+        conn.getApi().setSeerWatched(getSeerWatched());
+        Intent dayPeopleWakingUp = new Intent(this, DayPeopleWakingUpActivity.class);
+        startActivity(dayPeopleWakingUp);
     }
 }

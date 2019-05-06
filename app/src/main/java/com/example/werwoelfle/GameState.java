@@ -31,9 +31,11 @@ public class GameState extends Service {
         int getKilledByWerewolf();
         int getKilledByWitch();
         boolean isHealedByWitch();
+        int getSeerWatched();
         void setKilledByWerewolf(int killedByWerewolf);
         void setHealedByWitch(boolean isHealed);
         void setKilledByWitch(int killedByWitch);
+        void setSeerWatched(int seerWatched);
     }
 
     public class GameStateApi extends Binder implements IServiceApi   {
@@ -94,6 +96,11 @@ public class GameState extends Service {
         }
 
         @Override
+        public int getSeerWatched() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getSeerWatched();
+        }
+
+        @Override
         public void setKilledByWerewolf(int killedByWerewolf) {
             GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWerewolf(killedByWerewolf);
         }
@@ -106,6 +113,11 @@ public class GameState extends Service {
         @Override
         public void setKilledByWitch(int killedByWitch) {
             GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWitch(killedByWitch);
+        }
+
+        @Override
+        public void setSeerWatched(int seerWatched) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setSeerWatched(seerWatched);
         }
     }
 

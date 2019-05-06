@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class NightWerewolf extends Activity {
+public class NightWerewolfActivity extends Activity {
     private GameStateConnection conn = new GameStateConnection();
     private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
 
@@ -18,7 +18,7 @@ public class NightWerewolf extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.night_cupid);
+        setContentView(R.layout.night_werewolf);
 
         bindService(new Intent("service"), conn, 0);
         this.players = conn.getApi().getPlayersAlive();

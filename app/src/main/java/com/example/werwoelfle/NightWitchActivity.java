@@ -20,7 +20,7 @@ public class NightWitchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.night_cupid);
+        setContentView(R.layout.night_witch);
 
         bindService(new Intent("service"), conn, 0);
         this.players = conn.getApi().getPlayersAlive();
@@ -45,13 +45,6 @@ public class NightWitchActivity extends Activity {
     protected void onPause() {
         super.onPause();
         unbindService(conn);
-    }
-
-    public void next(View v) {
-        conn.getApi().setHealedByWitch(getWitchHeal());
-        conn.getApi().setKilledByWitch(getKilledByWitch());
-        Intent nightSeer = new Intent(this, NightSeer.class);
-        startActivity(nightSeer);
     }
 
     private void setKilledPlayerText(int playerId) {
@@ -119,5 +112,12 @@ public class NightWitchActivity extends Activity {
             }
         }
         return id;
+    }
+
+    public void next(View v) {
+        conn.getApi().setHealedByWitch(getWitchHeal());
+        conn.getApi().setKilledByWitch(getKilledByWitch());
+        Intent nightSeer = new Intent(this, NightSeerActivity.class);
+        startActivity(nightSeer);
     }
 }
