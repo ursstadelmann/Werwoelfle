@@ -32,6 +32,7 @@ public class GameState extends Service {
         int getKilledByWitch();
         boolean isHealedByWitch();
         int getSeerWatched();
+        ArrayList<Player> getPlayersDiedThisNight();
         void setKilledByWerewolf(int killedByWerewolf);
         void setHealedByWitch(boolean isHealed);
         void setKilledByWitch(int killedByWitch);
@@ -98,6 +99,11 @@ public class GameState extends Service {
         @Override
         public int getSeerWatched() {
             return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getSeerWatched();
+        }
+
+        @Override
+        public ArrayList<Player> getPlayersDiedThisNight() {
+            return GameState.this.getGame().getPlayersDiedThisNight();
         }
 
         @Override

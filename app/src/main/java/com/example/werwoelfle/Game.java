@@ -62,6 +62,30 @@ public class Game {
         return playersAlive;
     }
 
+    public ArrayList<Player> getPlayersDiedThisNight() {
+        ArrayList<Player> playersDied = new ArrayList<>();
+        Night night = getNight(getDayCycle());
+        boolean inLove = false;
+        for (Player player:getPlayers()) {
+            if (!night.isHealedByWitch() && player.getId() == night.getKilledByWerewolf() || player.getId() == night.getKilledByWitch()) {
+                if (player.isInLove()) {
+                    inLove = true;
+                } else {
+                    playersDied.add(player);
+                }
+            }
+        }
+
+        if (inLove) {
+            ArrayList<Integer> loveIds = getLoveIds();
+            for (int id:loveIds) {
+                playersDied.add(getPlayers().get(id));
+            }
+        }
+
+        return playersDied;
+    }
+
     public ArrayList<Integer> getLoveIds() {
         ArrayList<Integer> loveIds = new ArrayList<>();
         for (Player player:getPlayers()) {

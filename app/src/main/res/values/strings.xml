@@ -28,4 +28,5 @@
     <string name="SEER">Seher</string>
     <string name="WITCH">Hexe</string>
     <string name="HUNTER">Jaeger</string>
+    <string name="this_night_died">2) In dieser Nacht gestorben ist: %1$s</string>
 </resources>
