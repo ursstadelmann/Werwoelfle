@@ -29,6 +29,11 @@ public class GameState extends Service {
         ArrayList<Player> getPlayersAlive();
         ArrayList<Player> getInLove();
         int getKilledByWerewolf();
+        int getKilledByWitch();
+        boolean isHealedByWitch();
+        void setKilledByWerewolf(int killedByWerewolf);
+        void setHealedByWitch(boolean isHealed);
+        void setKilledByWitch(int killedByWitch);
     }
 
     public class GameStateApi extends Binder implements IServiceApi   {
@@ -76,6 +81,31 @@ public class GameState extends Service {
         @Override
         public int getKilledByWerewolf() {
             return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWerewolf();
+        }
+
+        @Override
+        public int getKilledByWitch() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWitch();
+        }
+
+        @Override
+        public boolean isHealedByWitch() {
+            return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).isHealedByWitch();
+        }
+
+        @Override
+        public void setKilledByWerewolf(int killedByWerewolf) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWerewolf(killedByWerewolf);
+        }
+
+        @Override
+        public void setHealedByWitch(boolean isHealed) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setHealedByWitch(isHealed);
+        }
+
+        @Override
+        public void setKilledByWitch(int killedByWitch) {
+            GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWitch(killedByWitch);
         }
     }
 
