@@ -23,6 +23,7 @@ public class Game {
         for (int i = this.players.size(); i < players; i++) {
             this.players.add(new Player(i));
         }
+        Log.d(LOG_TAG, "Player initialized");
     }
 
     public void setPlayerNames(ArrayList<String> names) {
@@ -34,6 +35,7 @@ public class Game {
                 this.players.set(player.getId(),player);
             }
         }
+        Log.d(LOG_TAG, "Player names set");
     }
 
     public void setPlayerRoles(ArrayList<Roles> roles) {
@@ -46,6 +48,7 @@ public class Game {
                 this.players.set(player.getId(),player);
             }
         }
+        Log.d(LOG_TAG, "Player roles set");
     }
 
     public ArrayList<Player> getPlayers() {
@@ -120,6 +123,7 @@ public class Game {
         Night night = new Night();
         night.setNightId(this.dayCycle);
         nights.add(night);
+        Log.d(LOG_TAG, "Next night");
     }
 
     public void clearInLove() {
@@ -153,6 +157,7 @@ public class Game {
 
     public void endOfDay() {
         this.dayCycle++;
+        Log.d(LOG_TAG, "End of day");
     }
 
     private void randomizeRoles(ArrayList<Roles> roles) {
