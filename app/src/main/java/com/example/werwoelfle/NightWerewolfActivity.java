@@ -1,8 +1,10 @@
 package com.example.werwoelfle;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -10,8 +12,8 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class NightWerewolfActivity extends Activity {
-    private GameStateConnection conn = new GameStateConnection();
-    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+    private GameStateConnection conn;
+    private static final String LOG_TAG = NightWerewolfActivity.class.getName();
 
     private ArrayList<Player> players;
 
@@ -20,12 +22,19 @@ public class NightWerewolfActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_werewolf);
 
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+
+                players = conn.getApi().getPlayersAlive();
+
+                int preselected = conn.getApi().getKilledByWerewolf();
+                setPlayerDropdown(players, R.id.killedByWerewolf, preselected);
+            }
+        };
+
         bindService(new Intent(this, GameState.class), conn, 0);
-        this.players = conn.getApi().getPlayersAlive();
-
-        int preselected = conn.getApi().getKilledByWerewolf();
-
-        setPlayerDropdown(this.players, R.id.killedByWerewolf, preselected);
     }
 
     @Override
@@ -63,7 +72,7 @@ public class NightWerewolfActivity extends Activity {
         Spinner killedByWerewolf = findViewById(R.id.killedByWerewolf);
         String killedByWerewolfName = killedByWerewolf.getSelectedItem().toString();
 
-        for (Player player:this.players) {
+        for (Player player : this.players) {
             if (player.getName().equals(killedByWerewolfName)) {
                 id = player.getId();
             }

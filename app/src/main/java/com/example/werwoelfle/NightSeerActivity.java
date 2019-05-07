@@ -1,8 +1,10 @@
 package com.example.werwoelfle;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -10,8 +12,8 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class NightSeerActivity extends Activity {
-    private GameStateConnection conn = new GameStateConnection();
-    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+    private GameStateConnection conn;
+    private static final String LOG_TAG = NightSeerActivity.class.getName();
 
     private ArrayList<Player> players;
 
@@ -20,12 +22,19 @@ public class NightSeerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_seer);
 
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+
+                players = conn.getApi().getPlayersAlive();
+
+                int preselected = conn.getApi().getSeerWatched();
+                setPlayerDropdown(players, R.id.seerDropdown, preselected);
+            }
+        };
+
         bindService(new Intent(this, GameState.class), conn, 0);
-        this.players = conn.getApi().getPlayersAlive();
-
-        int preselected = conn.getApi().getSeerWatched();
-
-        setPlayerDropdown(this.players, R.id.seerDropdown, preselected);
     }
 
     @Override
@@ -86,17 +95,17 @@ public class NightSeerActivity extends Activity {
         }
     }
 
+    private void killPlayers(ArrayList<Player> playersDied) {
+        for (Player playerDead:playersDied) {
+            conn.getApi().killPlayer(playerDead);
+        }
+    }
+
     public void next(View v) {
         conn.getApi().setSeerWatched(getSeerWatched());
         killPlayers(conn.getApi().getPlayersDiedThisNight());
 
         Intent dayPeopleWakingUp = new Intent(this, DayPeopleWakingUpActivity.class);
         startActivity(dayPeopleWakingUp);
-    }
-
-    private void killPlayers(ArrayList<Player> playersDied) {
-        for (Player playerDead:playersDied) {
-            conn.getApi().killPlayer(playerDead);
-        }
     }
 }
