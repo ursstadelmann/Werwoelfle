@@ -22,6 +22,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".GroupSignUpActivity"/>
+        <activity android:name=".RoleSelectionActivity"/>
+        <activity android:name=".GivePhoneToPlayerActivity"/>
+        <activity android:name=".PlayerRoleAllocationActivity"/>
+        <activity android:name=".NightGoingToSleepActivity"/>
+        <activity android:name=".NightCupidActivity"/>
+        <activity android:name=".NightWerewolfActivity"/>
+        <activity android:name=".NightWitchActivity"/>
+        <activity android:name=".NightSeerActivity"/>
+        <activity android:name=".NightSeerIsAVillager"/>
+        <activity android:name=".NightSeerIsAWerewolf"/>
+        <activity android:name=".DayPeopleWakingUpActivity"/>
+        <activity android:name=".DayAccusingEachOtherActivity"/>
+
+
 
         <service android:name=".GameState"
             android:enabled="true"
