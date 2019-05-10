@@ -69,7 +69,7 @@ public class Game {
         Night night = getNight(getDayCycle());
         boolean inLove = false;
         for (Player player : getPlayers()) {
-            if (!night.isHealedByWitch() && player.getId() == night.getKilledByWerewolf() || player.getId() == night.getKilledByWitch()) {
+            if (!night.isHealedByWitch() && player.getId() == night.getKilledByWerewolf() || night.getKilledByWitch() != null && player.getId() == night.getKilledByWitch()) {
                 if (player.isInLove()) {
                     inLove = true;
                 } else {

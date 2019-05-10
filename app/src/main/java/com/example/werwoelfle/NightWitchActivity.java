@@ -30,12 +30,18 @@ public class NightWitchActivity extends Activity {
                 super.onServiceConnected(name, service);
 
                 players = conn.getApi().getPlayersAlive();
+                for (Player player : players) {
+                    if (player.getRole() == Roles.WITCH) {
+                        setKilledPlayerText(conn.getApi().getKilledByWerewolf());
+                        setWitchHeal(conn.getApi().isHealedByWitch());
 
-                setKilledPlayerText(conn.getApi().getKilledByWerewolf());
-                setWitchHeal(conn.getApi().isHealedByWitch());
+                        Integer preselected = conn.getApi().getKilledByWitch();
+                        setPlayerDropdown(players, R.id.killedByWitch, preselected);
+                        return;
+                    }
+                }
 
-                Integer preselected = conn.getApi().getKilledByWitch();
-                setPlayerDropdown(players, R.id.killedByWitch, preselected);
+                activity();
             }
         };
 
@@ -45,17 +51,13 @@ public class NightWitchActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!conn.isServiceConnected()) {
-            bindService(new Intent(this, GameState.class), conn, 0);
-        }
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(conn.isServiceConnected()) {
-            unbindService(conn);
-        }
+        unbindService(conn);
     }
 
     private void setKilledPlayerText(int playerId) {
@@ -127,12 +129,16 @@ public class NightWitchActivity extends Activity {
         Spinner killedByWitch = findViewById(R.id.killedByWitch);
         int killedByWitchId = killedByWitch.getSelectedItemPosition();
 
-        return killedByWitchId;
+        return this.players.get(killedByWitchId).getId();
     }
 
     public void next(View v) {
         conn.getApi().setHealedByWitch(getWitchHeal());
         conn.getApi().setKilledByWitch(getKilledByWitch());
+        activity();
+    }
+
+    private void activity() {
         Intent nightSeer = new Intent(this, NightSeerActivity.class);
         startActivity(nightSeer);
     }
