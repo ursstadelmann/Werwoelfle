@@ -83,5 +83,4 @@ public class Groups {
     public void setBlinzli(Boolean blinzli) {
         this.blinzli = blinzli;
     }
-
 }
