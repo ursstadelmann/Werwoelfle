@@ -14,6 +14,7 @@ public class GameStateConnection implements ServiceConnection {
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
+        // Async call of Method when Service is bound
         this.api = (GameState.GameStateApiInterface) service;
     }
 

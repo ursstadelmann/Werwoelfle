@@ -1,8 +1,10 @@
 package com.example.werwoelfle;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -11,8 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class DayPeopleWakingUpActivity extends Activity {
-    private GameStateConnection conn = new GameStateConnection();
-    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+    private GameStateConnection conn;
+    private static final String LOG_TAG = DayPeopleWakingUpActivity.class.getName();
     private ArrayList<Player> players;
 
     @Override
@@ -20,15 +22,22 @@ public class DayPeopleWakingUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day_people_waking_up);
 
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+
+                players = conn.getApi().getPlayersAlive();
+
+                ArrayList<Player> playersDied = conn.getApi().getPlayersDiedThisNight();
+                if (checkHunter(playersDied)) {
+                    setHunterDropdown(players);
+                }
+                setDiedText(playersDied);
+            }
+        };
+
         bindService(new Intent(this, GameState.class), conn, 0);
-
-        this.players = conn.getApi().getPlayersAlive();
-
-        ArrayList<Player> playersDied = conn.getApi().getPlayersDiedThisNight();
-        if (checkHunter(playersDied)) {
-            setHunterDropdown(this.players);
-        }
-        setDiedText(playersDied);
     }
 
     @Override
@@ -106,5 +115,6 @@ public class DayPeopleWakingUpActivity extends Activity {
         conn.getApi().killPlayer(hunterKilled);
 
         Intent dayAccusingEachOther = new Intent(this, DayAccusingEachOtherActivity.class);
+        startActivity(dayAccusingEachOther);
     }
 }

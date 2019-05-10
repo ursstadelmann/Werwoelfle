@@ -1,8 +1,10 @@
 package com.example.werwoelfle;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -12,8 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class NightWitchActivity extends Activity {
-    private GameStateConnection conn = new GameStateConnection();
-    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+    private GameStateConnection conn;
+    private static final String LOG_TAG = NightWitchActivity.class.getName();
 
     private ArrayList<Player> players;
 
@@ -22,15 +24,22 @@ public class NightWitchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.night_witch);
 
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+
+                players = conn.getApi().getPlayersAlive();
+
+                setKilledPlayerText(conn.getApi().getKilledByWerewolf());
+                setWitchHeal(conn.getApi().isHealedByWitch());
+
+                int preselected = conn.getApi().getKilledByWitch();
+                setPlayerDropdown(players, R.id.killedByWitch, preselected);
+            }
+        };
+
         bindService(new Intent(this, GameState.class), conn, 0);
-        this.players = conn.getApi().getPlayersAlive();
-
-        setKilledPlayerText(conn.getApi().getKilledByWerewolf());
-        setWitchHeal(conn.getApi().isHealedByWitch());
-
-        int preselected = conn.getApi().getKilledByWitch();
-
-        setPlayerDropdown(this.players, R.id.killedByWitch, preselected);
     }
 
     @Override

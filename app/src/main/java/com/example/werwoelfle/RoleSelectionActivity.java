@@ -1,7 +1,9 @@
 package com.example.werwoelfle;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 
 public class RoleSelectionActivity extends AppCompatActivity {
 
-    private GameStateConnection conn = new GameStateConnection();
+    private GameStateConnection conn;
     private static final String LOG_TAG = RoleSelectionActivity.class.getName();
 
     @Override
@@ -17,9 +19,15 @@ public class RoleSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_selection);
 
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+                initiateRoles(conn.getApi().getPlayers().size());
+            }
+        };
+
         bindService(new Intent(this, GameState.class), conn, 0);
-        //TODO: Wait until service is bound
-        initiateRoles(conn.getApi().getPlayers().size());
     }
 
     @Override
@@ -46,10 +54,11 @@ public class RoleSelectionActivity extends AppCompatActivity {
     }
 
     private void initiateRoles(int players) {
-
+        // TODO: Initiate Roles
     }
 
     private ArrayList<Roles> getRoles() {
+        // TODO: get Roles and send them to service
         ArrayList<Roles> roles = new ArrayList<>();
         roles.add(Roles.WEREWOLF);
         roles.add(Roles.WEREWOLF);

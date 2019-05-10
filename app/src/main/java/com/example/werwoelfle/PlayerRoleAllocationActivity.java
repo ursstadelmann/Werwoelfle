@@ -1,13 +1,15 @@
 package com.example.werwoelfle;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.TextView;
 
 public class PlayerRoleAllocationActivity extends Activity {
-    private GameStateConnection conn = new GameStateConnection();
+    private GameStateConnection conn;
     private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
 
     private Player player;
@@ -17,13 +19,21 @@ public class PlayerRoleAllocationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_role);
 
-        Bundle extras = getIntent().getExtras();
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+
+                Bundle extras = getIntent().getExtras();
+
+                // Get Player from Service
+                player = conn.getApi().getPlayers().get(extras.getInt("player"));
+                setPlayerName(player.getName());
+                setPlayerRole(player.getRole());
+            }
+        };
 
         bindService(new Intent(this, GameState.class), conn, 0);
-        // Get Player from Service
-        this.player = conn.getApi().getPlayers().get(extras.getInt("player"));
-        setPlayerName(player.getName());
-        setPlayerRole(player.getRole());
     }
 
     @Override

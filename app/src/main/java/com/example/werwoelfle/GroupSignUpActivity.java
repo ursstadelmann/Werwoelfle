@@ -1,7 +1,9 @@
 package com.example.werwoelfle;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,19 +17,22 @@ import java.util.ArrayList;
 public class GroupSignUpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = GroupSignUpActivity.class.getName();
-    private GameStateConnection conn = new GameStateConnection();
+    private GameStateConnection conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_group_signup);
 
-        bindService(new Intent(this, GameState.class), conn, 0);
+        conn = new GameStateConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                super.onServiceConnected(name, service);
+                createNameBoxes(conn.getApi().getPlayers().size());
+            }
+        };
 
-        //TODO: Wait until service is bound
-        if (conn.isServiceConnected()) {
-            createNameBoxes(conn.getApi().getPlayers().size());
-        }
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
@@ -64,14 +69,6 @@ public class GroupSignUpActivity extends AppCompatActivity {
         scrollView.addView(layout);
     }
 
-
-    public void next(View v) {
-        // Call RoleSelection Activity
-        conn.getApi().setNames(getNames());
-        Intent roleSelectionActivity = new Intent(this, RoleSelectionActivity.class);
-        startActivity(roleSelectionActivity);
-    }
-
     private ArrayList<String> getNames() {
         ArrayList<String> names = new ArrayList<>();
 
@@ -86,5 +83,12 @@ public class GroupSignUpActivity extends AppCompatActivity {
         }
 
         return names;
+    }
+
+    public void next(View v) {
+        // Call RoleSelection Activity
+        conn.getApi().setNames(getNames());
+        Intent roleSelectionActivity = new Intent(this, RoleSelectionActivity.class);
+        startActivity(roleSelectionActivity);
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class NightGoingToSleepActivity extends Activity {
-    private static final String LOG_TAG = PlayerRoleAllocationActivity.class.getName();
+    private static final String LOG_TAG = NightGoingToSleepActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
         unbindService(conn);
     }
 
+    private void initPlayers() {
+        Spinner playerDropdown = (Spinner) findViewById(R.id.playerCount);
+        conn.getApi().setPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()));
+        ArrayList<Integer> inLoveIds = new ArrayList<>();
+        inLoveIds.add(0);
+        inLoveIds.add(1);
+        conn.getApi().setInLove(inLoveIds);
+    }
+
     public void next(View v) {
         Log.d(LOG_TAG, "MainActivity: next()");
 
@@ -52,14 +61,5 @@ public class MainActivity extends AppCompatActivity {
         // Create Group SignUp Intent
         Intent groupSignUpActivityIntent = new Intent(this, GroupSignUpActivity.class);
         startActivity(groupSignUpActivityIntent);
-    }
-
-    private void initPlayers() {
-        Spinner playerDropdown = (Spinner) findViewById(R.id.playerCount);
-        conn.getApi().setPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()));
-        ArrayList<Integer> inLoveIds = new ArrayList<>();
-        inLoveIds.add(0);
-        inLoveIds.add(1);
-        conn.getApi().setInLove(inLoveIds);
     }
 }
