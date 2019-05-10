@@ -29,7 +29,7 @@ public class NightSeerActivity extends Activity {
 
                 players = conn.getApi().getPlayersAlive();
 
-                int preselected = conn.getApi().getSeerWatched();
+                Integer preselected = conn.getApi().getSeerWatched();
                 setPlayerDropdown(players, R.id.seerDropdown, preselected);
             }
         };
@@ -48,15 +48,24 @@ public class NightSeerActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
-    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {
+    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, Integer selectionId) {
         final Spinner spinner = findViewById(spinnerId);
 
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
-            playerNames.add(player.getName());
+            String playerText;
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
+                playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
+            } else {
+                playerText = player.getName();
+            }
+
+            playerNames.add(playerText);
         }
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
@@ -64,20 +73,18 @@ public class NightSeerActivity extends Activity {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setSelection(selectionId);
+        if (selectionId == null) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(selectionId);
+        }
     }
 
     private Integer getSeerWatched() {
-        Integer id = null;
-        Spinner killedByWerewolf = findViewById(R.id.seerDropdown);
-        String killedByWerewolfName = killedByWerewolf.getSelectedItem().toString();
+        Spinner watchSeer = findViewById(R.id.seerDropdown);
+        int watchSeerId = watchSeer.getSelectedItemPosition();
 
-        for (Player player:this.players) {
-            if (player.getName().equals(killedByWerewolfName)) {
-                id = player.getId();
-            }
-        }
-        return id;
+        return watchSeerId;
     }
 
     public void getRole(View v) {

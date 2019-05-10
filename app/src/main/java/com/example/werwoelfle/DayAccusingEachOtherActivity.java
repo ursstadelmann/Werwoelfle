@@ -1,15 +1,15 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.util.ArrayList;
 
-public class DayAccusingEachOtherActivity extends Activity {
+public class DayAccusingEachOtherActivity extends AppCompatActivity {
     private GameStateConnection conn;
     private static final String LOG_TAG = DayAccusingEachOtherActivity.class.getName();
     private ArrayList<Player> players;
@@ -43,12 +43,14 @@ public class DayAccusingEachOtherActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     // TODO: Accusing logic
     public void next(View v) {
-        conn.getApi().newNight();
+        conn.getApi().endOfDay();
         Intent nightWerewolfActivity = new Intent(this, NightWerewolfActivity.class);
         startActivity(nightWerewolfActivity);
     }

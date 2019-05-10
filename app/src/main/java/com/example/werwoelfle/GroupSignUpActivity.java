@@ -46,7 +46,9 @@ public class GroupSignUpActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void createNameBoxes(int players) {
@@ -73,7 +75,7 @@ public class GroupSignUpActivity extends AppCompatActivity {
         ArrayList<String> names = new ArrayList<>();
 
         ScrollView scrollView = findViewById(R.id.nameBoxes);
-        LinearLayout linearLayout = (LinearLayout) scrollView.getChildAt(1);
+        LinearLayout linearLayout = (LinearLayout) scrollView.getChildAt(0);
 
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             if (linearLayout.getChildAt(i) instanceof EditText) {

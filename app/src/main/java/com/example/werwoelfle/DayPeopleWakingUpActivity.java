@@ -1,10 +1,10 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DayPeopleWakingUpActivity extends Activity {
+public class DayPeopleWakingUpActivity extends AppCompatActivity {
     private GameStateConnection conn;
     private static final String LOG_TAG = DayPeopleWakingUpActivity.class.getName();
     private ArrayList<Player> players;
@@ -51,7 +51,9 @@ public class DayPeopleWakingUpActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void setHunterDropdown(ArrayList<Player> playersAlive) {
