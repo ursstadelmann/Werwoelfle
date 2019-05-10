@@ -2,7 +2,6 @@ package com.example.werwoelfle;
 
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,9 +29,9 @@ public class Game {
         if (names.size() < this.players.size()) {
             throw new IllegalArgumentException("Insufficient names for players");
         } else {
-            for (Player player:this.players) {
+            for (Player player : this.players) {
                 player.setName(names.get(player.getId()));
-                this.players.set(player.getId(),player);
+                this.players.set(player.getId(), player);
             }
         }
         Log.d(LOG_TAG, "Player names set");
@@ -43,9 +42,9 @@ public class Game {
             throw new IllegalArgumentException("Insufficient roles for players");
         } else {
             randomizeRoles(roles);
-            for (Player player:this.players) {
+            for (Player player : this.players) {
                 player.setRole(roles.get(player.getId()));
-                this.players.set(player.getId(),player);
+                this.players.set(player.getId(), player);
             }
         }
         Log.d(LOG_TAG, "Player roles set");
@@ -57,7 +56,7 @@ public class Game {
 
     public ArrayList<Player> getPlayersAlive() {
         ArrayList<Player> playersAlive = new ArrayList<>();
-        for (Player player: players) {
+        for (Player player : players) {
             if (player.isAlive()) {
                 playersAlive.add(player);
             }
@@ -69,7 +68,7 @@ public class Game {
         ArrayList<Player> playersDied = new ArrayList<>();
         Night night = getNight(getDayCycle());
         boolean inLove = false;
-        for (Player player:getPlayers()) {
+        for (Player player : getPlayers()) {
             if (!night.isHealedByWitch() && player.getId() == night.getKilledByWerewolf() || player.getId() == night.getKilledByWitch()) {
                 if (player.isInLove()) {
                     inLove = true;
@@ -81,7 +80,7 @@ public class Game {
 
         if (inLove) {
             ArrayList<Integer> loveIds = getLoveIds();
-            for (int id:loveIds) {
+            for (int id : loveIds) {
                 playersDied.add(getPlayers().get(id));
             }
         }
@@ -91,7 +90,7 @@ public class Game {
 
     public ArrayList<Integer> getLoveIds() {
         ArrayList<Integer> loveIds = new ArrayList<>();
-        for (Player player:getPlayers()) {
+        for (Player player : getPlayers()) {
             if (player.isInLove()) {
                 loveIds.add(player.getId());
             }
@@ -112,7 +111,6 @@ public class Game {
     }
 
     public void newNight() {
-        endOfDay();
         //If Night got already created
         for (Night night : nights) {
             if (night.getNightId().equals(this.dayCycle)) {
@@ -127,27 +125,26 @@ public class Game {
     }
 
     public void clearInLove() {
-        for (final Player player:players) {
+        for (final Player player : players) {
             player.setInLove(false);
         }
     }
 
-    public void setInLove(ArrayList<Integer> playerIds) {
-        if (this.getInLove().size() + playerIds.size() > 2) {
+    public void setInLove(ArrayList<Player> inLovePlayers) {
+        if (this.getInLove().size() + inLovePlayers.size() > 2) {
             this.clearInLove();
         }
-        if (playerIds.size() <= 2) {
-            for (int playerId : playerIds) {
-                Player player = this.getPlayers().get(playerId);
+        if (inLovePlayers.size() <= 2) {
+            for (Player player : inLovePlayers) {
                 player.setInLove(true);
-                this.getPlayers().set(playerId, player);
+                this.getPlayers().set(player.getId(), player);
             }
         }
     }
 
     public ArrayList<Player> getInLove() {
         ArrayList<Player> inLove = new ArrayList<>();
-        for (final Player player:players) {
+        for (final Player player : players) {
             if (player.isInLove()) {
                 inLove.add(player);
             }

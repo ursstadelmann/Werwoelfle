@@ -34,7 +34,7 @@ public class NightWitchActivity extends Activity {
                 setKilledPlayerText(conn.getApi().getKilledByWerewolf());
                 setWitchHeal(conn.getApi().isHealedByWitch());
 
-                int preselected = conn.getApi().getKilledByWitch();
+                Integer preselected = conn.getApi().getKilledByWitch();
                 setPlayerDropdown(players, R.id.killedByWitch, preselected);
             }
         };
@@ -53,7 +53,9 @@ public class NightWitchActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void setKilledPlayerText(int playerId) {
@@ -90,12 +92,19 @@ public class NightWitchActivity extends Activity {
         return healedByWitch.isChecked();
     }
 
-    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {
+    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, Integer selectionId) {
         final Spinner spinner = findViewById(spinnerId);
 
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
-            playerNames.add(player.getName());
+            String playerText;
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
+                playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
+            } else {
+                playerText = player.getName();
+            }
+
+            playerNames.add(playerText);
         }
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
@@ -103,7 +112,11 @@ public class NightWitchActivity extends Activity {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setSelection(selectionId);
+        if (selectionId == null) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(selectionId);
+        }
     }
 
     private Integer getKilledByWitch() {
@@ -111,16 +124,10 @@ public class NightWitchActivity extends Activity {
         if (witchDontKill.isChecked()) {
             return null;
         }
-        Integer id = null;
         Spinner killedByWitch = findViewById(R.id.killedByWitch);
-        String killedByWitchName = killedByWitch.getSelectedItem().toString();
+        int killedByWitchId = killedByWitch.getSelectedItemPosition();
 
-        for (Player player:this.players) {
-            if (player.getName().equals(killedByWitchName)) {
-                id = player.getId();
-            }
-        }
-        return id;
+        return killedByWitchId;
     }
 
     public void next(View v) {

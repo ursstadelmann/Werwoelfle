@@ -1,13 +1,13 @@
 package com.example.werwoelfle;
 
 public class Night {
-    private Integer nightId;
-    private Integer killedByWerewolf;
-    private Integer killedByWitch;
+    private Integer nightId = null;
+    private Integer killedByWerewolf = null;
+    private Integer killedByWitch = null;
     private boolean healedByWitch = false;
-    private Integer seerWatched;
+    private Integer seerWatched = null;
 
-    public int getKilledByWerewolf() {
+    public Integer getKilledByWerewolf() {
         return killedByWerewolf;
     }
 
@@ -30,11 +30,11 @@ public class Night {
         this.nightId = night;
     }
 
-    public int getKilledByWitch() {
+    public Integer getKilledByWitch() {
         return killedByWitch;
     }
 
-    public void setKilledByWitch(int killedByWitch) {
+    public void setKilledByWitch(Integer killedByWitch) {
         this.killedByWitch = killedByWitch;
     }
 
@@ -46,11 +46,11 @@ public class Night {
         this.healedByWitch = healedByWitch;
     }
 
-    public int getSeerWatched() {
+    public Integer getSeerWatched() {
         return seerWatched;
     }
 
-    public void setSeerWatched(int seerWatched) {
+    public void setSeerWatched(Integer seerWatched) {
         this.seerWatched = seerWatched;
     }
 }

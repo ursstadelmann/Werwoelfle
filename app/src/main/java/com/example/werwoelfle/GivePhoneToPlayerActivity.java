@@ -1,14 +1,14 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-public class GivePhoneToPlayerActivity extends Activity {
+public class GivePhoneToPlayerActivity extends AppCompatActivity {
     private GameStateConnection conn;
     private static final String LOG_TAG = GivePhoneToPlayerActivity.class.getName();
 
@@ -27,7 +27,7 @@ public class GivePhoneToPlayerActivity extends Activity {
 
                 // Get Name from Service
                 player = conn.getApi().getPlayers().get(extras.getInt("player"));
-                setText(player.getName());
+                setPlayerName(player);
             }
         };
 
@@ -45,15 +45,17 @@ public class GivePhoneToPlayerActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
-    private void setText(String playerName) {
+    private void setPlayerName(Player player) {
         String playerText;
-        if (GivePhoneToPlayerActivity.isNullOrEmpty(playerName)) {
-            playerText = getApplicationContext().getString(R.string.give_phone_to_player, playerName);
+        if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
+            playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
         } else {
-            playerText = playerName;
+            playerText = player.getName();
         }
 
         TextView textView = findViewById(R.id.give_phone_to_player);
@@ -66,8 +68,8 @@ public class GivePhoneToPlayerActivity extends Activity {
         startActivity(roleAllocation);
     }
 
-    @org.jetbrains.annotations.Contract("null -> false")
+    @org.jetbrains.annotations.Contract("null -> true")
     public static boolean isNullOrEmpty(String str) {
-        return str != null && !str.trim().isEmpty();
+        return str == null || str.trim().isEmpty();
     }
 }

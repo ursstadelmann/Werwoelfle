@@ -22,21 +22,22 @@ public class GameState extends Service {
         void setPlayers(int players);
         void setNames(ArrayList<String> names);
         void setRoles(ArrayList<Roles> roles);
-        void setInLove(ArrayList<Integer> inLoveIds);
+        void setInLove(ArrayList<Player> inLovePlayers);
         void newNight();
+        void endOfDay();
 
         void killPlayer(Player killPlayer);
         ArrayList<Player> getPlayers();
         ArrayList<Player> getPlayersAlive();
         ArrayList<Player> getInLove();
-        int getKilledByWerewolf();
-        int getKilledByWitch();
+        Integer getKilledByWerewolf();
+        Integer getKilledByWitch();
         boolean isHealedByWitch();
-        int getSeerWatched();
+        Integer getSeerWatched();
         ArrayList<Player> getPlayersDiedThisNight();
         void setKilledByWerewolf(int killedByWerewolf);
         void setHealedByWitch(boolean isHealed);
-        void setKilledByWitch(int killedByWitch);
+        void setKilledByWitch(Integer killedByWitch);
         void setSeerWatched(int seerWatched);
     }
 
@@ -68,13 +69,19 @@ public class GameState extends Service {
         }
 
         @Override
-        public void setInLove(ArrayList<Integer> inLoveIds){
-            GameState.this.getGame().setInLove(inLoveIds);
+        public void setInLove(ArrayList<Player> inLovePlayers){
+            GameState.this.getGame().setInLove(inLovePlayers);
         }
 
         @Override
         public void newNight() {
             GameState.this.getGame().newNight();
+        }
+
+        @Override
+        public void endOfDay() {
+            GameState.this.getGame().endOfDay();
+            newNight();
         }
 
         @Override
@@ -88,12 +95,12 @@ public class GameState extends Service {
         }
 
         @Override
-        public int getKilledByWerewolf() {
+        public Integer getKilledByWerewolf() {
             return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWerewolf();
         }
 
         @Override
-        public int getKilledByWitch() {
+        public Integer getKilledByWitch() {
             return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getKilledByWitch();
         }
 
@@ -103,7 +110,7 @@ public class GameState extends Service {
         }
 
         @Override
-        public int getSeerWatched() {
+        public Integer getSeerWatched() {
             return GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).getSeerWatched();
         }
 
@@ -123,7 +130,7 @@ public class GameState extends Service {
         }
 
         @Override
-        public void setKilledByWitch(int killedByWitch) {
+        public void setKilledByWitch(Integer killedByWitch) {
             GameState.this.getGame().getNight(GameState.this.getGame().getDayCycle()).setKilledByWitch(killedByWitch);
         }
 

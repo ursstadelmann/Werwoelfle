@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         Log.d(LOG_TAG, "MainActivity: onResume()");
         super.onResume();
-
         if (!conn.isServiceConnected()) {
             bindService(new Intent(this, MainActivity.class), conn, 0);
         }
@@ -39,17 +38,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         Log.d(LOG_TAG, "MainActivity: onPause()");
         super.onPause();
-
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void initPlayers() {
         Spinner playerDropdown = (Spinner) findViewById(R.id.playerCount);
         conn.getApi().setPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()));
-        ArrayList<Integer> inLoveIds = new ArrayList<>();
-        inLoveIds.add(0);
-        inLoveIds.add(1);
-        conn.getApi().setInLove(inLoveIds);
     }
 
     public void next(View v) {

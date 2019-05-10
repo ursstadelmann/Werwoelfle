@@ -46,7 +46,9 @@ public class GroupSignUpActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void createNameBoxes(int players) {

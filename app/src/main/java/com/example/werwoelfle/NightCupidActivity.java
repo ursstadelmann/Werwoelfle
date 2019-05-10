@@ -30,9 +30,13 @@ public class NightCupidActivity extends Activity {
                 players = conn.getApi().getPlayersAlive();
 
                 ArrayList<Player> inLovePlayer = conn.getApi().getInLove();
-
-                setPlayerDropdown(players, R.id.inLove_1, inLovePlayer.get(0).getId());
-                setPlayerDropdown(players, R.id.inLove_2, inLovePlayer.get(1).getId());
+                if (inLovePlayer.size() == 0) {
+                    setPlayerDropdown(players, R.id.inLove_1, players.get(0).getId());
+                    setPlayerDropdown(players, R.id.inLove_2, players.get(1).getId());
+                } else {
+                    setPlayerDropdown(players, R.id.inLove_1, inLovePlayer.get(0).getId());
+                    setPlayerDropdown(players, R.id.inLove_2, inLovePlayer.get(1).getId());
+                }
             }
         };
 
@@ -50,7 +54,9 @@ public class NightCupidActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(conn);
+        if(conn.isServiceConnected()) {
+            unbindService(conn);
+        }
     }
 
     private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {
@@ -58,7 +64,14 @@ public class NightCupidActivity extends Activity {
 
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
-            playerNames.add(player.getName());
+            String playerText;
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
+                playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
+            } else {
+                playerText = player.getName();
+            }
+
+            playerNames.add(playerText);
         }
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
@@ -69,26 +82,26 @@ public class NightCupidActivity extends Activity {
         spinner.setSelection(selectionId);
     }
 
-    private ArrayList<Integer> getSpinnerSelected() {
-        ArrayList<Integer> inLoveIds = new ArrayList<>();
+    private ArrayList<Player> getSpinnerSelected() {
+        ArrayList<Player> inLovePlayers = new ArrayList<>();
         Spinner inLove_1 = findViewById(R.id.inLove_1);
-        String inLove1 = inLove_1.getSelectedItem().toString();
+        Long inLove1 = inLove_1.getSelectedItemId();
 
         Spinner inLove_2 = findViewById(R.id.inLove_2);
-        String inLove2 = inLove_2.getSelectedItem().toString();
+        Long inLove2 = inLove_2.getSelectedItemId();
         for (Player player : this.players) {
-            if (player.getName().equals(inLove1) || player.getName().equals(inLove2)) {
-                inLoveIds.add(player.getId());
+            if (player.getId() == (inLove1) || player.getId() == (inLove2)) {
+                inLovePlayers.add(player);
             }
         }
-        return inLoveIds;
+        return inLovePlayers;
     }
 
     public void next(View v) {
         // Get Player ID
-        ArrayList<Integer> inLoveIds = getSpinnerSelected();
+        ArrayList<Player> inLoveIPlayers = getSpinnerSelected();
 
-        conn.getApi().setInLove(inLoveIds);
+        conn.getApi().setInLove(inLoveIPlayers);
         Intent nightCupid = new Intent(this, NightWerewolfActivity.class);
         startActivity(nightCupid);
     }
