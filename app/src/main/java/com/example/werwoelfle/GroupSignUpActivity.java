@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -38,21 +39,21 @@ public class GroupSignUpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!conn.isServiceConnected()) {
-            bindService(new Intent(this, GameState.class), conn, 0);
-        }
+        Log.d(LOG_TAG, "GroupSignUpActivity: onResume()");
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(conn.isServiceConnected()) {
-            unbindService(conn);
-        }
+        unbindService(conn);
     }
 
     private void createNameBoxes(int players) {
         ScrollView scrollView = findViewById(R.id.nameBoxes);
+        if (scrollView.getChildCount() > 0) {
+            return;
+        }
         LinearLayout layout = new LinearLayout(this);
 
         layout.setOrientation(LinearLayout.VERTICAL);

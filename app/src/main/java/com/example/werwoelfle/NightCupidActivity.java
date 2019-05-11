@@ -46,17 +46,14 @@ public class NightCupidActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!conn.isServiceConnected()) {
-            bindService(new Intent(this, GameState.class), conn, 0);
-        }
+        bindService(new Intent(this, GameState.class), conn, 0);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(conn.isServiceConnected()) {
-            unbindService(conn);
-        }
+        unbindService(conn);
     }
 
     private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {

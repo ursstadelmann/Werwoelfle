@@ -27,6 +27,9 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
             public void onServiceConnected(ComponentName name, IBinder service) {
                 super.onServiceConnected(name, service);
 
+                killPlayers(conn.getApi().getPlayersDiedThisNight());
+
+
                 players = conn.getApi().getPlayersAlive();
 
                 ArrayList<Player> playersDied = conn.getApi().getPlayersDiedThisNight();
@@ -43,17 +46,13 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!conn.isServiceConnected()) {
-            bindService(new Intent(this, GameState.class), conn, 0);
-        }
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(conn.isServiceConnected()) {
-            unbindService(conn);
-        }
+        unbindService(conn);
     }
 
     private void setHunterDropdown(ArrayList<Player> playersAlive) {
@@ -61,7 +60,7 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
     }
 
     private boolean checkHunter(ArrayList<Player> playersDied) {
-        for (Player player:playersDied) {
+        for (Player player : playersDied) {
             if (player.getRole() == Roles.HUNTER) {
                 return true;
             }
@@ -70,12 +69,12 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
     }
 
     private void setDiedText(ArrayList<Player> playersDied) {
-        String playersDiedText = null;
-        for (Player playerDied:playersDied) {
-            if (playerDied.getName() != null) {
-                playersDiedText += playerDied.getName() + ": " + playerDied.getRole().getLabel(getApplicationContext()) + ", ";
+        String playersDiedText = "";
+        for (Player playerDied : playersDied) {
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(playerDied.getName())) {
+                playersDiedText += getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(playerDied.getId())) + ": " + playerDied.getRole().getLabel(getApplicationContext()) + ", \n";
             } else {
-                playersDiedText += getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(playerDied.getId())) + ": " + playerDied.getRole().getLabel(getApplicationContext()) + ", ";
+                playersDiedText += playerDied.getName() + ": " + playerDied.getRole().getLabel(getApplicationContext()) + ", \n";
             }
         }
 
@@ -83,12 +82,19 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
         textView.setText(getApplicationContext().getString(R.string.this_night_died, playersDiedText));
     }
 
-    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, int selectionId) {
+    private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, Integer selectionId) {
         final Spinner spinner = findViewById(spinnerId);
 
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
-            playerNames.add(player.getName());
+            String playerText;
+            if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
+                playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
+            } else {
+                playerText = player.getName();
+            }
+
+            playerNames.add(playerText);
         }
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
@@ -96,7 +102,11 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setSelection(selectionId);
+        if (selectionId == null) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(selectionId);
+        }
     }
 
     private Player getSpinnerSelected() {
@@ -104,17 +114,26 @@ public class DayPeopleWakingUpActivity extends AppCompatActivity {
         Spinner killedByWerewolf = findViewById(R.id.hunter_kills);
         String killedByWerewolfName = killedByWerewolf.getSelectedItem().toString();
 
-        for (Player player:this.players) {
+        for (Player player : this.players) {
             if (player.getName().equals(killedByWerewolfName)) {
                 playerKilled = player;
             }
         }
         return playerKilled;
     }
+    
+    private void killPlayers(ArrayList<Player> playersDied) {
+        for (Player playerDead : playersDied) {
+            conn.getApi().killPlayer(playerDead);
+        }
+    }
 
     public void next(View v) {
-        Player hunterKilled = getSpinnerSelected();
-        conn.getApi().killPlayer(hunterKilled);
+        ArrayList<Player> playersDied = conn.getApi().getPlayersDiedThisNight();
+        if (checkHunter(playersDied)) {
+            Player hunterKilled = getSpinnerSelected();
+            conn.getApi().killPlayer(hunterKilled);
+        }
 
         Intent dayAccusingEachOther = new Intent(this, DayAccusingEachOtherActivity.class);
         startActivity(dayAccusingEachOther);

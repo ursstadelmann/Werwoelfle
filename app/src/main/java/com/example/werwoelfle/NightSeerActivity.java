@@ -28,9 +28,14 @@ public class NightSeerActivity extends Activity {
                 super.onServiceConnected(name, service);
 
                 players = conn.getApi().getPlayersAlive();
-
-                Integer preselected = conn.getApi().getSeerWatched();
-                setPlayerDropdown(players, R.id.seerDropdown, preselected);
+                for (Player player : players) {
+                    if (player.getRole() == Roles.SEER) {
+                        Integer preselected = conn.getApi().getSeerWatched();
+                        setPlayerDropdown(players, R.id.seerDropdown, preselected);
+                        return;
+                    }
+                }
+                activity();
             }
         };
 
@@ -40,17 +45,13 @@ public class NightSeerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!conn.isServiceConnected()) {
-            bindService(new Intent(this, GameState.class), conn, 0);
-        }
+        bindService(new Intent(this, GameState.class), conn, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(conn.isServiceConnected()) {
-            unbindService(conn);
-        }
+        unbindService(conn);
     }
 
     private void setPlayerDropdown(ArrayList<Player> players, int spinnerId, Integer selectionId) {
@@ -84,12 +85,12 @@ public class NightSeerActivity extends Activity {
         Spinner watchSeer = findViewById(R.id.seerDropdown);
         int watchSeerId = watchSeer.getSelectedItemPosition();
 
-        return watchSeerId;
+        return this.players.get(watchSeerId).getId();
     }
 
     public void getRole(View v) {
         int playerId = getSeerWatched();
-        for (Player player:this.players) {
+        for (Player player : this.players) {
             if (player.getId() == playerId) {
                 if (player.getRole() == Roles.WEREWOLF) {
                     Intent showWerewolf = new Intent(this, NightSeerIsAWerewolf.class);
@@ -102,16 +103,12 @@ public class NightSeerActivity extends Activity {
         }
     }
 
-    private void killPlayers(ArrayList<Player> playersDied) {
-        for (Player playerDead:playersDied) {
-            conn.getApi().killPlayer(playerDead);
-        }
-    }
-
     public void next(View v) {
         conn.getApi().setSeerWatched(getSeerWatched());
-        killPlayers(conn.getApi().getPlayersDiedThisNight());
+        activity();
+    }
 
+    private void activity() {
         Intent dayPeopleWakingUp = new Intent(this, DayPeopleWakingUpActivity.class);
         startActivity(dayPeopleWakingUp);
     }
