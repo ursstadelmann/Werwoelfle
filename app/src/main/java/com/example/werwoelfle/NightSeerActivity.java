@@ -61,9 +61,9 @@ public class NightSeerActivity extends Activity {
         for (Player player : players) {
             String playerText;
             if (GivePhoneToPlayerActivity.isNullOrEmpty(player.getName())) {
-                playerText = getApplicationContext().getString(R.string.give_phone_to_player, Integer.toString(player.getId()));
+                playerText = getApplicationContext().getString(R.string.player_and_role, Integer.toString(player.getId()), player.getRole().getLabel(getApplicationContext()));
             } else {
-                playerText = player.getName();
+                playerText = player.getName() + " / " + player.getRole().getLabel(getApplicationContext());
             }
 
             playerNames.add(playerText);

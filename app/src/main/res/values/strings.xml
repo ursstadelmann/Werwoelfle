@@ -22,6 +22,7 @@
     <string name="werGestorbenIst">2) Gestorben in dieser Nacht ist: %1$s, Rolle: %2$s</string>
     <string name="give_phone_to">Gib das Natel an %1$s weiter.</string>
     <string name="give_phone_to_player">Spieler %1$s</string>
+    <string name="player_and_role">Spieler %1$s / %2$s</string>
     <string name="WEREWOLF">Werwolf</string>
     <string name="VILLAGER">Dorfbewohner</string>
     <string name="CUPID">Amor</string>
