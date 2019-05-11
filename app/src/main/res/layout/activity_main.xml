@@ -81,6 +81,13 @@
             android:onClick="next"
             android:text="Los" />
 
+        <Button
+            android:id="@+id/vorhandene_gruppe_Auswaehlen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="next"
+            android:text="vorhandene Gruppe auswählen" />
+
 
 </LinearLayout>
 
