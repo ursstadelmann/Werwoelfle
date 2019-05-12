@@ -85,7 +85,7 @@
             android:id="@+id/vorhandene_gruppe_Auswaehlen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="next"
+            android:onClick="chooseExistingGroups"
             android:text="vorhandene Gruppe auswählen" />
 
 

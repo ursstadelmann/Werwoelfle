@@ -1,5 +1,7 @@
 package com.example.werwoelfle;
 
+import android.support.annotation.NonNull;
+
 public class Player {
     private int id;
     private String name;
@@ -55,5 +57,12 @@ public class Player {
 
     public void setInLove(boolean inLove) {
         this.inLove = inLove;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        // A value you want to be displayed in the spinner item.
+        return getName() + " / " + getRole();
     }
 }

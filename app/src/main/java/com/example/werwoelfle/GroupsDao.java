@@ -15,6 +15,9 @@ public interface GroupsDao {
     @Query("SELECT * FROM groups")
     List<Groups> getAll();
 
+    @Query("SELECT * FROM groups WHERE groupId = :groupIds")
+    Groups getById(Integer groupIds);
+
     @Insert
     void insertAll(Groups...groups);
 
