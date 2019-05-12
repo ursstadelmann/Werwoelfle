@@ -97,6 +97,7 @@
         android:layout_marginRight="8dp"
         android:background="@android:color/black"
         android:gravity="center"
+        android:onClick="saveGroup"
         android:text="speichern"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
