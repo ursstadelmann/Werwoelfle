@@ -41,23 +41,24 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gruppe abspeichern:" />
+            android:text="Gruppe:" />
 
         <EditText
-            android:id="@+id/nameNeueGruppe"
-            android:layout_width="0dp"
+            android:id="@+id/newGroupName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Gruppen-Name"
             android:inputType="textMultiLine" />
 
         <Button
-            android:id="@+id/neueGruppeSpeichern"
+            android:id="@+id/saveNewGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="saveGroup"
             android:text="speichern" />
 
     </LinearLayout>

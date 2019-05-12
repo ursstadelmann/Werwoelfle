@@ -30,7 +30,8 @@ public abstract class GroupsDatabase extends RoomDatabase {
                 super.onCreate(db);
             }
         })
-                .build();
+            .allowMainThreadQueries()
+            .build();
     }
 }
 

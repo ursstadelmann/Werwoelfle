@@ -6,14 +6,12 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.UUID;
-
 @Entity(tableName = "groups")
 public class Groups {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "groupId")
-    private String groupId;
+    private Integer groupId;
 
     @ColumnInfo(name = "groupName")
     private String groupName;
@@ -24,31 +22,25 @@ public class Groups {
     @ColumnInfo(name = "groupMemberName")
     private String groupMemberName;
 
-    @ColumnInfo(name = "blinzli")
-    private Boolean blinzli;
-
     @Ignore
-    public Groups(String groupName, Integer numberOfPlayers, String groupMemberName, Boolean blinzli) {
-        this.groupId = UUID.randomUUID().toString();
+    public Groups(String groupName, Integer numberOfPlayers, String groupMemberName) {
         this.groupName = groupName;
         this.numberOfPlayers = numberOfPlayers;
         this.groupMemberName = groupMemberName;
-        this.blinzli = blinzli;
     }
 
-    public Groups(String groupId, String groupName, Integer numberOfPlayers, String groupMemberName, Boolean blinzli) {
-        this.groupMemberName = groupId;
+    public Groups(Integer groupId, String groupName, Integer numberOfPlayers, String groupMemberName) {
+        this.groupId = groupId;
         this.groupName = groupName;
         this.numberOfPlayers = numberOfPlayers;
         this.groupMemberName = groupMemberName;
-        this.blinzli = blinzli;
     }
 
-    public String getGroupId(){
+    public Integer getGroupId(){
         return this.groupId;
     }
 
-    public void setGroupId(String groupId){
+    public void setGroupId(Integer groupId){
         this.groupId=groupId;
     }
 
@@ -76,11 +68,10 @@ public class Groups {
         this.groupMemberName = groupMemberName;
     }
 
-    public Boolean getBlinzli() {
-        return blinzli;
-    }
-
-    public void setBlinzli(Boolean blinzli) {
-        this.blinzli = blinzli;
+    @NonNull
+    @Override
+    public String toString() {
+        // A value you want to be displayed in the spinner item.
+        return getGroupId() + ": " + getGroupName() + ", " + getNumberOfPlayers() + " + 1 Erzähler";
     }
 }
