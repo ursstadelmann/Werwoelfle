@@ -77,8 +77,8 @@ public class PlayerRoleAllocationActivity extends AppCompatActivity {
         } else {
             // Game start
             conn.getApi().newNight();
-            Intent nightGoingToSleep = new Intent(this, NightGoingToSleepActivity.class);
-            startActivity(nightGoingToSleep);
+            Intent givePhoneToLeader = new Intent(this, GivePhoneToLeaderActivity.class);
+            startActivity(givePhoneToLeader);
         }
     }
 }

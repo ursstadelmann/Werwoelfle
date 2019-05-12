@@ -37,8 +37,8 @@
         <activity android:name=".ChooseExistingGroupsActivity"/>
         <activity android:name=".processAblaufButtonActivity"/>
         <activity android:name=".figuresActivity"/>
-
-
+        <activity android:name=".GivePhoneToLeaderActivity"/>
+        
         <service android:name=".GameState"
             android:enabled="true"
             android:exported="false"/>

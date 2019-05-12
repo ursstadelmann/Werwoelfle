@@ -1,10 +1,10 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NightWitchActivity extends Activity {
+public class NightWitchActivity extends AppCompatActivity {
     private GameStateConnection conn;
     private static final String LOG_TAG = NightWitchActivity.class.getName();
 
