@@ -19,7 +19,7 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/black"
         android:gravity="center"
-        android:text="Gib das Natel an Spielleiter SPIELER VARIABLE zurück."
+        android:text="Gib das Natel an den Erzähler zurück."
         android:textColor="@android:color/white"
         android:textSize="24dp"
         android:textStyle="bold"
