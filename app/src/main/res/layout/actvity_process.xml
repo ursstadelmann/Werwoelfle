@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:text="Die Vorbereitungsphase:\n\n
+- Jeder Spieler bekommt vom Spielleiter einen Charakter zugewiesen.\n
+- Das Dorf schläft ein.\n
+- Amor erwacht und bestimmt zwei Liebende. Amor schläft wieder ein.\n
+- Die Liebenden erwachen und finden sich. Die Liebenden schlafen wieder ein.\n
+- Die Nacht beginnt.\n\n
+
+Die Nacht:\n\n
+
+- Das Dorf schläft ein, es können keine Informationen mehr ausgetauscht werden.\n
+- Der Heiler erwacht und kann einen Spieler beschützen. Der Heiler schläft wieder ein.\n
+- Die Werwölfe erwachen, erkennen sich und suchen sich ein Opfer. Die Werwölfe schlafen wieder ein.\n
+- Die Hexe erwacht und kann heilen und/oder töten. Die Hexe schläft wieder ein.\n
+- Die Seherin erwacht und erfährt die Identität eines Spielers ihrer Wahl. Die Seherin schläft wieder ein.\n
+- Der Tag beginnt.\n\n
+
+Der Tag:\n\n
+
+- Das Dorf erwacht.\n
+- Die Dorfbewohner erfahren, wer in der Nacht getötet wurde.\n
+- Alle verbliebenen Dorfbewohner diskutieren, wer ein Werwolf sein könnte, dabei müssen sich die Werwölfe wie normale Bürger verhalten und versuchen, den Verdacht von sich auf die Bürger abzulenken.\n
+- Das Dorf stimmt darüber ab, welcher unter ihnen als Werwolf verurteilt und gehängt wird. Dieser Spieler scheidet aus dem Spiel aus.\n
+- Das Dorf erfährt die Identität des ausgeschiedenen Spielers.\n
+- Die Nacht beginnt.\n\n
+
+Das Spiel endet, wenn alle Bürger oder alle Werwölfe getötet wurden oder wenn nur noch das Liebepaar am Leben ist."
+            android:textColor="@android:color/white"
+            app:fontFamily="monospace" />
+
+
+
+    </ScrollView>
+
+
+</LinearLayout>

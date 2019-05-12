@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/night"
     android:layout_height="match_parent">
 
     <Button
@@ -15,6 +16,8 @@
         android:layout_marginBottom="36dp"
         android:onClick="next"
         android:text="Weiter"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -26,6 +29,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="36dp"
         android:text="Zurück"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -39,6 +44,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="Menü"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toEndOf="@+id/button2" />
@@ -53,6 +60,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="SpielerListe"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toEndOf="@+id/button2" />
@@ -67,7 +76,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Nacht 1 - Amor"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,16 +91,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="1) Amor wacht auf und bestimt zwei Verliebte"
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/inLove_1"
@@ -96,6 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:background="@android:color/white"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -113,12 +126,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:background="@android:color/white"
         android:layout_marginBottom="346dp"
         app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -130,11 +140,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="2) Amor schläft wieder ein"
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inLove_2"
-        app:layout_constraintVertical_bias="0.110000014" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/textView6"
@@ -145,7 +158,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="3) LiebesPaar schaut sich an "
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -159,7 +175,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="4) LiebesPaar schläft wieder ein"
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
