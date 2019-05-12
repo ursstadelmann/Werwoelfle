@@ -60,14 +60,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="monospace"
-        app:layout_constraintBottom_toTopOf="@+id/nameNeueGruppe"
+        app:layout_constraintBottom_toTopOf="@+id/newGroupName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/nameNeueGruppe"
-
+        android:id="@+id/newGroupName"
         android:layout_width="187dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -88,7 +87,7 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <Button
-        android:id="@+id/neueGruppeSpeichern"
+        android:id="@+id/saveNewGroup"
         android:layout_width="89dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
@@ -101,7 +100,7 @@
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
         android:typeface="monospace"
-        app:layout_constraintBaseline_toBaselineOf="@+id/nameNeueGruppe"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newGroupName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent" />
@@ -128,7 +127,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameNeueGruppe" />
+        app:layout_constraintTop_toBottomOf="@+id/newGroupName" />
+
 
     <Button
         android:id="@+id/startseite_ablaufErklären"
@@ -150,7 +150,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameNeueGruppe" />
+        app:layout_constraintTop_toBottomOf="@+id/newGroupName" />
+
 
     <Button
         android:id="@+id/next_button"
@@ -173,6 +174,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neueGruppeSpeichern" />
+        app:layout_constraintTop_toBottomOf="@+id/saveNewGroup" />
+
 
 </android.support.constraint.ConstraintLayout>

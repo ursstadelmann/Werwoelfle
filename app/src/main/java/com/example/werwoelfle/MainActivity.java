@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getName();
     private GameStateConnection conn = new GameStateConnection();
 
+    static final int RESULT_CODE = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,34 +28,60 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.d(LOG_TAG, "MainActivity: onResume()");
+        Log.d(LOG_TAG, "onResume()");
         super.onResume();
         bindService(new Intent(this, MainActivity.class), conn, 0);
     }
 
     @Override
     protected void onPause() {
-        Log.d(LOG_TAG, "MainActivity: onPause()");
+        Log.d(LOG_TAG, "onPause()");
         super.onPause();
         unbindService(conn);
     }
 
-    private void initPlayers() {
-        Spinner playerDropdown = (Spinner) findViewById(R.id.playerCount);
-        conn.getApi().setPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()) - 1);
+    private void initPlayers(Integer players) {
+        conn.getApi().setPlayers(players);
     }
 
     public void next(View v) {
-        Log.d(LOG_TAG, "MainActivity: next()");
+        Log.d(LOG_TAG, "next()");
 
         // Get player count and init service
-        initPlayers();
+        Spinner playerDropdown = findViewById(R.id.playerCount);
+        initPlayers(Integer.parseInt(playerDropdown.getSelectedItem().toString()) - 1);
 
         // Create Group SignUp Intent
         Intent groupSignUpActivityIntent = new Intent(this, GroupSignUpActivity.class);
         startActivity(groupSignUpActivityIntent);
     }
+    public void chooseExistingGroups(View v) {
+        Log.d(LOG_TAG, "chooseExistingGroups()");
 
+        //Create Exisiting Groups
+        Intent existingGroupsIntent = new Intent(this, ChooseExistingGroupsActivity.class);
+        startActivityForResult(existingGroupsIntent, RESULT_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 0:
+                Integer groupSelected = data.getIntExtra("groupId", -1);
+                Groups group = GroupsDatabase.getInstance(this).groupsDao().getById(groupSelected);
+                initPlayers(group.getNumberOfPlayers());
+
+                // Create Group SignUp Intent
+                Intent groupSignUpActivityIntent = new Intent(this, GroupSignUpActivity.class);
+                groupSignUpActivityIntent.putExtra("groupId", groupSelected);
+                startActivity(groupSignUpActivityIntent);
+                break;
+            case 1:
+                break;
+            default:
+                break;
+        }
+    }
     public void process(View v) {
         Log.d(LOG_TAG, "MainActivity: process()");
 

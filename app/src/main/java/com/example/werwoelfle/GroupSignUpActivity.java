@@ -8,28 +8,51 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GroupSignUpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = GroupSignUpActivity.class.getName();
     private GameStateConnection conn;
 
+    private Groups group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_group_signup);
 
+
+        int groupId = getIntent().getIntExtra("groupId", -1);
+        group = GroupsDatabase.getInstance(this).groupsDao().getById(groupId);
+
         conn = new GameStateConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 super.onServiceConnected(name, service);
-                createNameBoxes(conn.getApi().getPlayers().size());
+
+
+                if (group != null) {
+                    createNameBoxes(conn.getApi().getPlayers().size(), Arrays.asList(group.getGroupMemberName().split(", ", -1)));
+                    TextView groupNameTv = findViewById(R.id.newGroupName);
+                    groupNameTv.setText(group.getGroupName());
+                    groupNameTv.setEnabled(false);
+                    Button savebutton = findViewById(R.id.saveNewGroup);
+                    savebutton.setText("Update");
+                    savebutton.setEnabled(false);
+                } else {
+                    createNameBoxes(conn.getApi().getPlayers().size(), null);
+                }
             }
         };
 
@@ -49,7 +72,7 @@ public class GroupSignUpActivity extends AppCompatActivity {
         unbindService(conn);
     }
 
-    private void createNameBoxes(int players) {
+    private void createNameBoxes(int players, List<String> names) {
         ScrollView scrollView = findViewById(R.id.nameBoxes);
         if (scrollView.getChildCount() > 0) {
             return;
@@ -59,13 +82,16 @@ public class GroupSignUpActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        for (int player = 1; player <= players; player++) {
+        for (int player = 0; player < players; player++) {
             // Create Textbox
             EditText textBox = new EditText(this);
             textBox.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
             textBox.setSingleLine(true);
             textBox.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-            textBox.setHint("Spieler " + player);
+            textBox.setHint("Spieler " + (player + 1));
+            if (names != null && names.size() == players) {
+                textBox.setText(names.get(player));
+            }
 
             layout.addView(textBox);
         }
@@ -86,6 +112,13 @@ public class GroupSignUpActivity extends AppCompatActivity {
         }
 
         return names;
+    }
+
+    public void saveGroup(View v) {
+        TextView groupNameTv = findViewById(R.id.newGroupName);
+        Groups newGroup = new Groups(groupNameTv.getText().toString(), conn.getApi().getPlayers().size(), String.join(", ", getNames()));
+        GroupsDatabase.getInstance(this).groupsDao().insertAll(newGroup);
+        Toast.makeText(getApplicationContext(), "Group inserted into DB", Toast.LENGTH_SHORT).show();
     }
 
     public void next(View v) {

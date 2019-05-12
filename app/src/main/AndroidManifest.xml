@@ -34,9 +34,9 @@
         <activity android:name=".NightSeerIsAWerewolf"/>
         <activity android:name=".DayPeopleWakingUpActivity"/>
         <activity android:name=".DayAccusingEachOtherActivity"/>
+        <activity android:name=".ChooseExistingGroupsActivity"/>
         <activity android:name=".processAblaufButtonActivity"/>
         <activity android:name=".figuresActivity"/>
-
 
 
         <service android:name=".GameState"
