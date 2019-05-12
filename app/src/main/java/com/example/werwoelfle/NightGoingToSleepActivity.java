@@ -1,11 +1,11 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class NightGoingToSleepActivity extends Activity {
+public class NightGoingToSleepActivity extends AppCompatActivity {
     private static final String LOG_TAG = NightGoingToSleepActivity.class.getName();
 
     @Override

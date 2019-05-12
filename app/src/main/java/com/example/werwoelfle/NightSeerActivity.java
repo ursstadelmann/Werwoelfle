@@ -1,17 +1,17 @@
 package com.example.werwoelfle;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class NightSeerActivity extends Activity {
+public class NightSeerActivity extends AppCompatActivity {
     private GameStateConnection conn;
     private static final String LOG_TAG = NightSeerActivity.class.getName();
 
