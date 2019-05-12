@@ -88,7 +88,9 @@ public class NightSeerActivity extends Activity {
         return this.players.get(watchSeerId).getId();
     }
 
-    public void getRole(View v) {
+    public void seeRole(View v) {
+        conn.getApi().setSeerWatched(getSeerWatched());
+
         int playerId = getSeerWatched();
         for (Player player : this.players) {
             if (player.getId() == playerId) {
@@ -104,7 +106,6 @@ public class NightSeerActivity extends Activity {
     }
 
     public void next(View v) {
-        conn.getApi().setSeerWatched(getSeerWatched());
         activity();
     }
 
