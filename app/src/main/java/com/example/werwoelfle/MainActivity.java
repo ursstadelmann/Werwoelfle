@@ -82,4 +82,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void process(View v) {
+        Log.d(LOG_TAG, "MainActivity: process()");
+
+
+        Intent processActivityIntent = new Intent(this, processAblaufButtonActivity.class);
+        startActivity(processActivityIntent);
+    }
+
+    public void figures(View v) {
+        Log.d(LOG_TAG, "MainActivity: figures()");
+
+
+        Intent figuresActivityIntent = new Intent(this, figuresActivity.class);
+        startActivity(figuresActivityIntent);
+    }
 }
