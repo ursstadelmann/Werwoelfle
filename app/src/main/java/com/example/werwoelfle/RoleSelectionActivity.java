@@ -72,7 +72,7 @@ public class RoleSelectionActivity extends AppCompatActivity {
     private void initiateRoles(int players) {
         this.total_players = players;
 
-        this.werewolf_count = players / 3;
+        this.werewolf_count = players / 4;
         this.witch_count = 1;
         this.seer_count = 1;
         this.cupid_count = 1;
