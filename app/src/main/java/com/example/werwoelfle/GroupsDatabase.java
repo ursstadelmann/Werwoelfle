@@ -25,11 +25,11 @@ public abstract class GroupsDatabase extends RoomDatabase {
 
     private static GroupsDatabase buildDatabase(final Context context) {
         return Room.databaseBuilder(context, GroupsDatabase.class, "groups").addCallback(new Callback() {
-                    @Override
-                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                        super.onCreate(db);
-                    }
-                })
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+            }
+        })
                 .build();
     }
 }

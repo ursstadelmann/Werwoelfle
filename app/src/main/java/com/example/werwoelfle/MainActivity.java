@@ -52,4 +52,12 @@ public class MainActivity extends AppCompatActivity {
         Intent groupSignUpActivityIntent = new Intent(this, GroupSignUpActivity.class);
         startActivity(groupSignUpActivityIntent);
     }
+
+    public void chooseExistingGroups(View v){
+        Log.d(LOG_TAG, "activity_existing_groups");
+
+        //Create Exisiting Groups
+        Intent existingGroupsIntente = new Intent (this, ChooseExistingGroupsActivity.class);
+        startActivity(existingGroupsIntente);
+    }
 }
