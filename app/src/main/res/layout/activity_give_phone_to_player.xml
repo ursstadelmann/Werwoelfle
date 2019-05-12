@@ -20,6 +20,7 @@
         android:background="@android:color/black"
         android:gravity="center"
         android:text="Gib das Natel an SPIELER VARIABLE weiter."
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
