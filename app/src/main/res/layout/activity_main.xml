@@ -1,111 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/welcomebackground"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:paddingRight="16dp">
+
 
     <TextView
-        android:id="@+id/startseite_statusbar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="30dp"
-        android:text="@string/startseite_statusbar" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="vertical">
-
-        <TextView
         android:id="@+id/willkommen"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:text="@string/startseite_willkommen" />
+        android:gravity="center"
+        android:layout_width="326dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:autoText="false"
+        android:background="@android:color/black"
+        android:text="@string/startseite_willkommen"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06999999" />
 
-        <TextView
-            android:id="@+id/wieVielePersonen"
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:text="Mit wie vielen Personen möchetet ihr spielen?" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/playerCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/zahlMitspieler" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="16dp"
-                android:layout_weight="1"
-                android:text="Personen und jemand, der das Spiel leitet (du)" />
-
-    </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:text="Möchtest du mit der Rolle des BlinzliMeitschi spielen?" />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/yes_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ja"
-                android:textAppearance="?android:textAppearanceMedium" />
-            <RadioButton
-                android:id="@+id/no_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nein"
-                android:textAppearance="?android:textAppearanceMedium" />
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="next"
-            android:text="Los" />
-
-        <Button
-            android:id="@+id/vorhandene_gruppe_Auswaehlen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="next"
-            android:text="vorhandene Gruppe auswählen" />
+    <TextView
+        android:id="@+id/wieVielePersonen"
+        android:layout_width="336dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:text="Mit wie vielen Personen möchetet ihr spielen?"
+        android:textColor="@android:color/background_light"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.423"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/willkommen"
+        app:layout_constraintVertical_bias="0.114" />
 
 
-</LinearLayout>
+    <Spinner
+        android:id="@+id/playerCount"
+        android:layout_width="46dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/background_light"
+        android:entries="@array/zahlMitspieler"
+        android:outlineAmbientShadowColor="@android:color/white"
+        android:outlineSpotShadowColor="@android:color/white"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.339" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="362dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:text="Personen und jemand, der das Spiel leitet (du)"
+        android:textColor="@android:color/background_light"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerCount" />
 
-        <Button
-            android:id="@+id/startseite_rollenErklären"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/startseite_rollenErklären" />
 
-        <Button
-            android:id="@+id/startseite_ablaufErklären"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/startseite_ablaufErklären" />
-    </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/background_dark"
+        android:onClick="next"
+        android:text="Los"
+        android:gravity="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65999997" />
+
+    <Button
+        android:id="@+id/vorhandene_gruppe_Auswaehlen"
+        android:layout_width="262dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/black"
+        android:onClick="next"
+        android:text="vorhandene Gruppe auswählen"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+
+    <Button
+        android:id="@+id/startseite_rollenErklären"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/startseite_rollenErklären"
+        android:onClick="figures"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/startseite_ablaufErklären" />
+
+    <Button
+        android:id="@+id/startseite_ablaufErklären"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/startseite_ablaufErklären"
+        android:background="@android:color/black"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="process"/>
+
+</android.support.constraint.ConstraintLayout>

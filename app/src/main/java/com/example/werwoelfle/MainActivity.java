@@ -1,5 +1,6 @@
 package com.example.werwoelfle;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,5 +52,21 @@ public class MainActivity extends AppCompatActivity {
         // Create Group SignUp Intent
         Intent groupSignUpActivityIntent = new Intent(this, GroupSignUpActivity.class);
         startActivity(groupSignUpActivityIntent);
+    }
+
+    public void process(View v) {
+        Log.d(LOG_TAG, "MainActivity: process()");
+
+
+        Intent processActivityIntent = new Intent(this, processAblaufButtonActivity.class);
+        startActivity(processActivityIntent);
+    }
+
+    public void figures(View v) {
+        Log.d(LOG_TAG, "MainActivity: figures()");
+
+
+        Intent figuresActivityIntent = new Intent(this, figuresActivity.class);
+        startActivity(figuresActivityIntent);
     }
 }
