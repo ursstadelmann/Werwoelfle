@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,6 +18,8 @@
         android:layout_marginBottom="8dp"
         android:onClick="ok"
         android:text="OK"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,8 +34,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
         android:text="Dorfbewohner"
-        android:textSize="60dp"
+        android:textColor="@android:color/white"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/night"
     android:layout_height="match_parent">
 
     <Button
@@ -15,6 +16,8 @@
         android:layout_marginBottom="36dp"
         android:onClick="next"
         android:text="Weiter"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -26,6 +29,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="36dp"
         android:text="Zurück"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -39,6 +44,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="Menü"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toEndOf="@+id/button2" />
@@ -53,6 +60,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="SpielerListe"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toEndOf="@+id/button2" />
@@ -67,7 +76,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Nacht 1 - Seher"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +94,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="1) Seher wacht auf"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -97,7 +112,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="3) Seher schläft wieder ein"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -110,7 +128,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="2) Von wem willst du die Identität wissen?"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="monospace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -136,6 +157,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/white"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
