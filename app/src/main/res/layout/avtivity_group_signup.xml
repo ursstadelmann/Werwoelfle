@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="381dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -22,6 +22,7 @@
         android:text="Trage hier die Namen aller Mitspieler ein:"
         android:textColor="@android:color/white"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:fontFamily="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,18 +37,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintHeight_max="130dp"
         android:background="@android:color/white"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="130dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="292dp"
-        android:layout_height="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
