@@ -126,10 +126,14 @@
         android:id="@+id/cupid_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="1"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="76dp"
-        tools:layout_editor_absoluteY="318dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/hunter_count"
